@@ -1,0 +1,2780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OZ Optimizer">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="application-name" content="OZ Optimizer">
+<meta name="theme-color" content="#0f6e56">
+<meta name="format-detection" content="telephone=no">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230f6e56'/><text y='.9em' font-size='70' x='10' fill='white'>OZ</text></svg>">
+<title>Ounces Optimizer - UMA Obuasi</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;height:-webkit-fill-available}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;background:#1a1a2e;color:#111;min-height:100vh;min-height:-webkit-fill-available;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.nav{background:#0f6e56;padding:12px 16px;padding-top:max(12px,env(safe-area-inset-top));padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;gap:10px;position:-webkit-sticky;position:sticky;top:0;z-index:100;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.nav-logo{width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;flex-shrink:0}
+.nav h1{font-size:15px;font-weight:bold;color:#fff;flex:1}
+.nav p{font-size:10px;color:rgba(255,255,255,0.7)}
+.nav-badge{background:rgba(255,255,255,0.15);border-radius:20px;padding:3px 10px;font-size:10px;color:#fff;white-space:nowrap}
+.sync-status{font-size:9px;padding:2px 8px;border-radius:20px;font-weight:bold;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.sync-saved{background:rgba(110,231,183,0.25);color:#6ee7b7}
+.sync-unsaved{background:rgba(251,191,36,0.25);color:#fde68a}
+.sync-saving{background:rgba(147,197,253,0.25);color:#93c5fd}
+.sync-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sync-saved .sync-dot{background:#6ee7b7}
+.sync-unsaved .sync-dot{background:#fde68a;animation:blink 1.2s infinite}
+.sync-saving .sync-dot{background:#93c5fd;animation:spin-dot 0.8s linear infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+@keyframes spin-dot{0%{opacity:1}50%{opacity:0.2}100%{opacity:1}}
+.tabs{display:grid;grid-template-columns:1fr 1fr 1fr;background:#16213e;border-bottom:2px solid #0f6e56}
+.tabs{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{padding:10px 4px;text-align:center;font-size:10px;font-weight:bold;color:rgba(255,255,255,0.5);cursor:pointer;border:none;background:transparent;transition:all 0.2s;-webkit-appearance:none;touch-action:manipulation;min-height:44px;white-space:nowrap}
+@media(min-width:600px){.tab{font-size:12px;padding:12px}}
+.tab.active{color:#fff;background:#0f3460;border-bottom:3px solid #0f6e56}
+.page{display:none;padding:12px;padding-bottom:max(12px,env(safe-area-inset-bottom));padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));max-width:900px;margin:0 auto}
+@media(min-width:768px){
+  .page{padding:20px;padding-bottom:max(20px,env(safe-area-inset-bottom))}
+  .pgrid{grid-template-columns:1fr 1fr 1fr}
+  .pfull{grid-column:auto}
+  .af-row{grid-template-columns:3fr 1fr 1fr}
+  .dev-row{grid-template-columns:3fr 1fr 1fr 1fr}
+  .best3{flex-direction:row}
+  .pcard input{font-size:24px}
+  .stable th,.stable td{padding:9px 12px;font-size:12px}
+  .cin{width:56px;font-size:12px}
+  .run-btn{font-size:16px;min-height:56px}
+  .exp-btn{font-size:14px;min-height:56px}
+  .nav h1{font-size:18px}
+  .about-card p,.about-card li{font-size:14px}
+}
+.page.active{display:block}
+.card{background:#fff;border-radius:13px;overflow:hidden;margin-bottom:12px}
+.card-hdr{padding:10px 14px;font-size:12px;font-weight:bold;color:#fff;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.card-hdr.green{background:#0f6e56}
+.card-hdr.navy{background:#1e3a8a}
+.card-hdr.gold{background:#b45309}
+.card-hdr.purple{background:#4c1d95}
+.card-hdr.orange{background:#c2410c}
+.card-body{padding:12px 14px}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.pcard{border-radius:11px;padding:11px 13px}
+.pc-gold{background:linear-gradient(135deg,#b45309,#d97706)}
+.pc-teal{background:linear-gradient(135deg,#0f6e56,#1d9e75)}
+.pc-navy{background:linear-gradient(135deg,#1e3a8a,#2563eb)}
+.pc-purple{background:linear-gradient(135deg,#4c1d95,#7c3aed)}
+.pcard label{font-size:9px;font-weight:bold;color:rgba(255,255,255,0.75);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
+.pcard input{width:100%;font-size:20px;font-weight:bold;color:#fff;background:transparent;border:none;border-bottom:2px solid rgba(255,255,255,0.35);outline:none;padding-bottom:2px;-webkit-appearance:none;appearance:none;border-radius:0}
+.pcard input:focus{border-bottom-color:rgba(255,255,255,0.9)}
+.pcard .hint{font-size:10px;color:rgba(255,255,255,0.65);margin-top:4px}
+.pfull{grid-column:1/-1}
+.tolrow{background:linear-gradient(135deg,#4c1d95,#7c3aed);border-radius:11px;padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.tolrow label{font-size:9px;font-weight:bold;color:rgba(255,255,255,0.75);text-transform:uppercase;white-space:nowrap}
+.tolrow input[type=range]{flex:1;accent-color:#c4b5fd;-webkit-appearance:none;appearance:none;height:4px;background:rgba(255,255,255,0.3);border-radius:2px;outline:none;cursor:pointer}
+.tolrow input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:#c4b5fd;cursor:pointer;border:2px solid #fff}
+.tolrow input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#c4b5fd;cursor:pointer;border:2px solid #fff}
+.tolrow .tv{font-size:18px;font-weight:bold;color:#fff;min-width:40px;text-align:right}
+.stable-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;overflow-y:visible}
+.stable{width:100%;border-collapse:collapse;font-size:11px;min-width:500px}
+.stable th{padding:7px 9px;background:#1e3a8a;color:#fff;font-size:9px;font-weight:bold;text-transform:uppercase;border:1px solid rgba(255,255,255,0.15)}
+.stable td{padding:6px 8px;border:1px solid #e5e7eb;vertical-align:middle}
+.stable tr:nth-child(even) td{background:#f8fafc}
+.stable tr.active-row td{background:#f0fdf4}
+.stable tr.inactive-row td{opacity:0.55}
+.stable tr.nostock-row td{opacity:0.38}
+.dev-table th{background:#c2410c}
+.dev-table tr.dev-active td{background:#fff7ed}
+.ghi{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:bold;background:#d1fae5;color:#065f46}
+.gmid{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:bold;background:#dbeafe;color:#1e3a8a}
+.glo{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:bold;background:#fef3c7;color:#92400e}
+.gno{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:bold;background:#f1f5f9;color:#94a3b8}
+.cin{width:50px;font-size:11px;padding:3px 4px;border:1.5px solid #e2e8f0;border-radius:6px;text-align:center;background:#f8fafc;color:#111}
+.cin:disabled{opacity:0.3}
+.cin:focus{outline:none;border-color:#2563eb}
+.cin.editable{border-color:#f59e0b;background:#fffbeb}
+.cin.editable:focus{border-color:#d97706}
+.tbtn{border:none;border-radius:20px;padding:4px 10px;font-size:10px;font-weight:bold;cursor:pointer;min-height:44px;color:#fff;-webkit-appearance:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.ton{background:#16a34a}
+.toff{background:#dc2626}
+.tnone{background:#94a3b8;cursor:default}
+.delbtn{background:#fee2e2;border:none;border-radius:6px;color:#dc2626;width:36px;height:36px;cursor:pointer;font-size:13px;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;-webkit-appearance:none;touch-action:manipulation}
+.editbtn{background:#dbeafe;border:none;border-radius:6px;color:#1e3a8a;width:36px;height:36px;cursor:pointer;font-size:12px;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;-webkit-appearance:none;touch-action:manipulation}
+.savebtn-inline{background:#d1fae5;border:none;border-radius:6px;color:#065f46;width:36px;height:36px;cursor:pointer;font-size:13px;font-weight:bold;display:inline-flex;align-items:center;justify-content:center;-webkit-appearance:none;touch-action:manipulation}
+.action-btns{display:flex;gap:3px;align-items:center}
+.addform{display:none;background:#eff6ff;border-radius:10px;padding:12px;margin-bottom:10px;border:1.5px solid #bfdbfe}
+.addform.open{display:block}
+.devform{display:none;background:#fff7ed;border-radius:10px;padding:12px;margin-bottom:10px;border:1.5px solid #fed7aa}
+.devform.open{display:block}
+.af-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;margin-bottom:8px}
+.dev-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:6px;margin-bottom:8px}
+.af-field label{font-size:9px;font-weight:bold;color:#1e40af;text-transform:uppercase;display:block;margin-bottom:3px}
+.dev-field label{font-size:9px;font-weight:bold;color:#9a3412;text-transform:uppercase;display:block;margin-bottom:3px}
+.af-field input,.dev-field input{width:100%;font-size:12px;padding:7px 8px;border:1.5px solid #93c5fd;border-radius:7px;outline:none;background:#fff;min-height:36px;color:#111;-webkit-appearance:none;appearance:none}
+.dev-field input{border-color:#fdba74}
+.af-field input:focus{border-color:#2563eb}
+.dev-field input:focus{border-color:#ea580c}
+.af-save{background:#0f6e56;border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:bold;padding:9px;cursor:pointer;width:100%;min-height:44px;-webkit-appearance:none;touch-action:manipulation}
+.dev-save{background:#c2410c;border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:bold;padding:9px;cursor:pointer;width:100%;min-height:44px;-webkit-appearance:none;touch-action:manipulation}
+.hdr-btns{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.addbtn{background:linear-gradient(135deg,#1e3a8a,#2563eb);border:none;border-radius:8px;color:#fff;font-size:11px;font-weight:bold;padding:6px 11px;cursor:pointer;min-height:44px;display:flex;align-items:center;gap:4px;white-space:nowrap;-webkit-appearance:none;touch-action:manipulation}
+.adddevbtn{background:linear-gradient(135deg,#c2410c,#ea580c);border:none;border-radius:8px;color:#fff;font-size:11px;font-weight:bold;padding:6px 11px;cursor:pointer;min-height:44px;display:flex;align-items:center;gap:4px;white-space:nowrap;-webkit-appearance:none;touch-action:manipulation}
+.btn-row{display:grid;grid-template-columns:1fr auto auto auto auto;gap:8px;margin-bottom:12px}
+.clear-btn{padding:14px 12px;font-size:12px;font-weight:bold;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#374151,#6b7280);color:#fff;min-height:50px;white-space:nowrap;-webkit-appearance:none;touch-action:manipulation;display:flex;align-items:center;gap:5px}
+.run-btn{padding:14px;font-size:14px;font-weight:bold;border:none;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;background:linear-gradient(135deg,#0f6e56,#1d9e75);color:#fff;min-height:50px;-webkit-appearance:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.run-btn:disabled{opacity:0.5;cursor:not-allowed}
+.run-btn:active{filter:brightness(0.9)}
+.exp-btn{padding:14px 14px;font-size:12px;font-weight:bold;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;min-height:50px;white-space:nowrap;-webkit-appearance:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.exp-btn:disabled{opacity:0.4}
+.cloud-save-btn{padding:14px;font-size:12px;font-weight:bold;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#0369a1,#0ea5e9);color:#fff;min-height:50px;white-space:nowrap;-webkit-appearance:none;touch-action:manipulation;display:flex;align-items:center;gap:5px}
+.cloud-save-btn:disabled{opacity:0.4}
+.stmsg{padding:20px;text-align:center;color:#888;font-size:13px;border:2px dashed #e2e8f0;border-radius:12px;background:#fff}
+.best3{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+@media(min-width:560px){.best3{flex-direction:row}}
+.b3card{border-radius:13px;overflow:hidden;border:1px solid #ddd;flex:1;background:#fff}
+.b3h0{background:linear-gradient(135deg,#b45309,#d97706);padding:13px 14px}
+.b3h1{background:linear-gradient(135deg,#0f6e56,#1d9e75);padding:13px 14px}
+.b3h2{background:linear-gradient(135deg,#4c1d95,#7c3aed);padding:13px 14px}
+.b3rank{font-size:9px;font-weight:bold;color:rgba(255,255,255,0.75);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.b3oz{font-size:28px;font-weight:bold;color:#fff;line-height:1}
+.b3ozs{font-size:13px;font-weight:normal;color:rgba(255,255,255,0.7);margin-left:3px}
+.b3diff{font-size:11px;padding:2px 9px;border-radius:20px;background:rgba(255,255,255,0.2);color:#fff;display:inline-block;margin-top:5px}
+.b3meta{font-size:11px;color:rgba(255,255,255,0.65);margin-top:4px}
+.b3body{padding:10px 14px;background:#fff}
+.b3stope{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #f1f5f9;gap:4px}
+.b3stope:last-child{border-bottom:none}
+.b3sn{font-size:11px;font-weight:bold;color:#111;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:50%}
+.b3type{font-size:9px;padding:1px 5px;border-radius:10px;font-weight:bold;margin-left:3px}
+.b3type.dev{background:#fed7aa;color:#9a3412}
+.b3type.ore{background:#d1fae5;color:#065f46}
+.b3tr{font-size:11px;font-weight:bold;color:#2563eb;white-space:nowrap}
+.b3o{font-size:11px;color:#888;white-space:nowrap}
+.bbar{background:#e2e8f0;border-radius:4px;height:5px;margin-top:4px;overflow:hidden}
+.bfill{height:100%;border-radius:4px}
+.optcard{border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;background:#fff;margin-bottom:8px}
+.opth{padding:9px 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.oc0{background:linear-gradient(90deg,#1a3a5c,#1e3a8a)}
+.oc1{background:linear-gradient(90deg,#0f6e56,#1d9e75)}
+.oc2{background:linear-gradient(90deg,#4c1d95,#7c3aed)}
+.oc3{background:linear-gradient(90deg,#b45309,#d97706)}
+.oc4{background:linear-gradient(90deg,#be185d,#ec4899)}
+.oc5{background:linear-gradient(90deg,#0369a1,#0ea5e9)}
+.oc6{background:linear-gradient(90deg,#065f46,#10b981)}
+.oc7{background:linear-gradient(90deg,#9a3412,#ea580c)}
+.onum{font-size:10px;font-weight:bold;background:rgba(255,255,255,0.22);color:#fff;padding:2px 9px;border-radius:20px}
+.ostats{display:flex;gap:10px;flex:1;flex-wrap:wrap}
+.ost{font-size:11px;color:rgba(255,255,255,0.75)}
+.ost strong{color:#fff}
+.odiff-ok{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:bold;background:rgba(255,255,255,0.2);color:#fff}
+.odiff-hi{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:bold;background:rgba(251,191,36,0.35);color:#fef08a}
+.otbl{width:100%;border-collapse:collapse;font-size:11px;min-width:380px}
+.otbl th{padding:6px 9px;text-align:left;color:#64748b;font-weight:bold;font-size:9px;text-transform:uppercase;border-bottom:1px solid #f1f5f9;background:#f8fafc;white-space:nowrap}
+.otbl td{padding:6px 9px;color:#111;border-bottom:1px solid #f1f5f9;white-space:nowrap}
+.otbl .tot td{font-weight:bold;background:#f8fafc}
+.otbl tr:last-child td{border-bottom:none}
+.obar{height:3px;border-radius:2px;display:inline-block;vertical-align:middle;margin-left:4px}
+.rw{color:#d97706;font-weight:bold}
+.rc{color:#dc2626;font-weight:bold}
+.divd{border:none;border-top:1px solid #e2e8f0;margin:10px 0}
+.stitle{font-size:13px;font-weight:bold;color:#111;margin-bottom:8px}
+.type-badge{display:inline-block;font-size:9px;padding:1px 6px;border-radius:10px;font-weight:bold;margin-left:4px;vertical-align:middle}
+.type-ore{background:#d1fae5;color:#065f46}
+.type-dev{background:#fed7aa;color:#9a3412}
+.about-card{background:#fff;border-radius:13px;padding:16px;margin-bottom:12px}
+.about-card h3{font-size:13px;font-weight:bold;color:#1e3a8a;margin-bottom:8px}
+.about-card p{font-size:12px;color:#555;line-height:1.7;margin-bottom:6px}
+.about-card ul{font-size:12px;color:#555;line-height:1.9;padding-left:18px}
+.formula-box{background:#1e3a8a;border-radius:8px;padding:10px 14px;margin-top:8px}
+.formula-box code{color:#93c5fd;font-size:13px;font-weight:bold;font-family:monospace}
+.section-divider{height:8px}
+
+/* Setup banner */
+.setup-banner{background:linear-gradient(135deg,#1e3a8a,#0f6e56);border-radius:13px;padding:18px;margin-bottom:14px;color:#fff}
+.setup-banner h2{font-size:15px;font-weight:bold;margin-bottom:6px}
+.setup-banner p{font-size:12px;color:rgba(255,255,255,0.8);line-height:1.7;margin-bottom:10px}
+.setup-steps{display:flex;flex-direction:column;gap:6px}
+.setup-step{background:rgba(255,255,255,0.12);border-radius:8px;padding:8px 12px;font-size:12px;color:#fff;display:flex;align-items:center;gap:8px}
+.setup-step-num{background:rgba(255,255,255,0.25);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;flex-shrink:0}
+
+select{-webkit-appearance:none;appearance:none;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:6px;padding:3px 4px;font-size:11px;color:#111;cursor:pointer}
+input[type=number]{-webkit-appearance:none;appearance:none}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+
+.card-hdr{display:-webkit-flex;display:flex}
+.hdr-btns{display:-webkit-flex;display:flex}
+.action-btns{display:-webkit-flex;display:flex}
+.btn-row{display:-webkit-grid;display:grid}
+.pgrid{display:-webkit-grid;display:grid}
+.b3stope{display:-webkit-flex;display:flex}
+.tolrow{display:-webkit-flex;display:flex}
+.best3{display:-webkit-flex;display:flex}
+.tabs{display:-webkit-grid;display:grid}
+
+select.cin{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23555' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 4px center;padding-right:20px;width:80px}
+
+html{scroll-behavior:smooth;-webkit-scroll-behavior:smooth}
+.stable-wrap{overflow-x:scroll;-webkit-overflow-scrolling:touch;scroll-snap-type:none}
+
+.calc-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:999;align-items:center;justify-content:center}
+.calc-overlay.open{display:flex}
+.calc-box{background:#fff;border-radius:16px;padding:20px;width:320px;max-width:92vw;box-shadow:0 8px 32px rgba(0,0,0,0.25)}
+.calc-title{font-size:14px;font-weight:bold;color:#1e3a8a;margin-bottom:4px}
+.calc-stope{font-size:11px;color:#555;margin-bottom:14px}
+.calc-current{background:#f0fdf4;border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.calc-current span{font-size:12px;color:#555}
+.calc-current strong{font-size:20px;color:#0f6e56;font-weight:bold}
+.calc-section-lbl{font-size:10px;font-weight:bold;color:#555;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.calc-add-row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:10px;align-items:end}
+.calc-add-row label{font-size:10px;color:#888;display:block;margin-bottom:3px}
+.calc-add-row input{width:100%;font-size:13px;padding:7px 8px;border:1.5px solid #e2e8f0;border-radius:7px;outline:none;color:#111;background:#f8fafc}
+.calc-add-row input:focus{border-color:#2563eb}
+.calc-add-btn{background:#1e3a8a;border:none;border-radius:7px;color:#fff;font-size:12px;font-weight:bold;padding:8px 12px;cursor:pointer;white-space:nowrap;height:36px}
+.calc-log{max-height:140px;overflow-y:auto;margin-bottom:14px}
+.calc-log-row{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-bottom:1px solid #f1f5f9;font-size:11px}
+.calc-log-row:last-child{border-bottom:none}
+.calc-log-row .log-tonnes{color:#0f6e56;font-weight:bold}
+.calc-log-row .log-who{color:#888;font-size:10px}
+.calc-log-row .log-del{background:none;border:none;color:#dc2626;cursor:pointer;font-size:13px;padding:0 4px}
+.calc-log-empty{text-align:center;color:#aaa;font-size:12px;padding:12px}
+.calc-footer{display:flex;gap:8px}
+.calc-save{flex:1;background:#0f6e56;border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:bold;padding:10px;cursor:pointer}
+.calc-cancel{background:#f1f5f9;border:none;border-radius:8px;color:#555;font-size:13px;font-weight:bold;padding:10px;cursor:pointer;width:80px}
+.past-opt-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;margin-bottom:10px;overflow:hidden}
+.past-opt-hdr{background:#1e3a8a;padding:10px 14px;display:flex;align-items:center;justify-content:space-between}
+.past-opt-hdr span{font-size:12px;font-weight:bold;color:#fff}
+.past-opt-hdr small{font-size:10px;color:rgba(255,255,255,0.7)}
+.past-opt-body{padding:10px 14px}
+.past-opt-meta{font-size:11px;color:#555;margin-bottom:8px}
+.past-opt-del{background:#fee2e2;border:none;border-radius:6px;color:#dc2626;font-size:11px;font-weight:bold;padding:4px 10px;cursor:pointer}
+.past-opt-pdf{background:#dbeafe;border:none;border-radius:6px;color:#1e3a8a;font-size:11px;font-weight:bold;padding:4px 10px;cursor:pointer;margin-right:6px}
+.no-past{text-align:center;color:#aaa;padding:30px;font-size:13px}
+
+.numpad-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:1000;align-items:flex-end;justify-content:center}
+.numpad-overlay.open{display:flex}
+.numpad-box{background:#fff;border-radius:20px 20px 0 0;padding:20px;width:100%;max-width:420px;box-shadow:0 -4px 24px rgba(0,0,0,0.2)}
+.numpad-title{font-size:13px;font-weight:bold;color:#1e3a8a;margin-bottom:3px}
+.numpad-sub{font-size:11px;color:#888;margin-bottom:10px}
+.numpad-display{background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;padding:10px 14px;font-size:24px;font-weight:bold;color:#1e3a8a;text-align:right;margin-bottom:12px;min-height:50px;word-break:break-all;letter-spacing:1px}
+.numpad-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.npbtn{border:none;border-radius:10px;font-size:18px;font-weight:bold;cursor:pointer;min-height:52px;touch-action:manipulation;-webkit-appearance:none;transition:filter 0.1s}
+.npbtn:active{filter:brightness(0.88)}
+.npbtn.num{background:#f1f5f9;color:#111}
+.npbtn.op{background:#dbeafe;color:#1e3a8a}
+.npbtn.del{background:#fee2e2;color:#dc2626}
+.npbtn.ok{background:#0f6e56;color:#fff;grid-column:span 2}
+.npbtn.zero{grid-column:span 2}
+.numpad-footer{display:flex;gap:8px}
+.np-cancel{flex:1;background:#f1f5f9;border:none;border-radius:10px;color:#555;font-size:13px;font-weight:bold;padding:11px;cursor:pointer;-webkit-appearance:none}
+
+.pc-numpad-btn{width:100%;font-size:20px;font-weight:bold;color:#fff;background:transparent;border:none;border-bottom:2px solid rgba(255,255,255,0.35);outline:none;padding-bottom:2px;text-align:left;cursor:pointer;-webkit-appearance:none;touch-action:manipulation}
+.pc-numpad-btn:active{opacity:0.8}
+
+.af-numpad-btn{width:100%;font-size:12px;font-weight:bold;padding:7px 8px;border:1.5px solid #93c5fd;border-radius:7px;outline:none;background:#fff;color:#1e3a8a;text-align:left;cursor:pointer;min-height:36px;-webkit-appearance:none;touch-action:manipulation}
+.af-numpad-btn:active{background:#eff6ff}
+
+.tolrow2{background:linear-gradient(135deg,#b45309,#d97706);border-radius:11px;padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.tolrow2 label{font-size:9px;font-weight:bold;color:rgba(255,255,255,0.75);text-transform:uppercase;white-space:nowrap}
+.tolrow2 input[type=range]{flex:1;accent-color:#fde68a;-webkit-appearance:none;appearance:none;height:4px;background:rgba(255,255,255,0.3);border-radius:2px;outline:none;cursor:pointer}
+.tolrow2 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:#fde68a;cursor:pointer;border:2px solid #fff}
+.tolrow2 input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fde68a;cursor:pointer;border:2px solid #fff}
+.tolrow2 .tv{font-size:18px;font-weight:bold;color:#fff;min-width:40px;text-align:right}
+
+/* New stope row highlight animation */
+@keyframes newRowFlash{0%{background:#bbf7d0}100%{background:transparent}}
+.new-row-flash td{animation:newRowFlash 1.5s ease-out forwards}
+
+/* Save prompt toast */
+.save-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:#1e3a8a;color:#fff;border-radius:14px;padding:14px 18px;font-size:13px;font-weight:bold;z-index:2000;box-shadow:0 6px 24px rgba(0,0,0,0.3);display:flex;align-items:center;gap:12px;max-width:92vw;transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1)}
+.save-toast.show{transform:translateX(-50%) translateY(0)}
+.save-toast-icon{font-size:20px;flex-shrink:0}
+.save-toast-text{flex:1;line-height:1.4}
+.save-toast-text small{display:block;font-size:10px;font-weight:normal;color:rgba(255,255,255,0.7);margin-top:2px}
+.save-toast-btn{background:rgba(255,255,255,0.2);border:none;border-radius:8px;color:#fff;font-size:11px;font-weight:bold;padding:6px 10px;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.save-toast-close{background:none;border:none;color:rgba(255,255,255,0.6);font-size:16px;cursor:pointer;padding:0 0 0 6px;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<div class="nav">
+  <div class="nav-logo">OZ</div>
+  <div style="flex:1">
+    <h1>Ounces Optimizer</h1>
+    <p>UMA - Obuasi Mine</p>
+  </div>
+  <div id="syncStatus" class="sync-status sync-saved"><span class="sync-dot"></span><span id="syncLabel">Synced</span></div>
+  <span class="nav-badge">v6.0</span>
+</div>
+
+<div class="tabs" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr">
+  <button class="tab active" id="tab1" onclick="showTab('optimizer')">Optimizer</button>
+  <button class="tab" id="tab4" onclick="showTab('stopesetup')">Stope Setup</button>
+  <button class="tab" id="tab5" onclick="showTab('dest')">Destinations</button>
+  <button class="tab" id="tab3" onclick="showTab('past')">Past Runs</button>
+  <button class="tab" id="tab2" onclick="showTab('about')">How It Works</button>
+  <button class="tab" id="tab6" onclick="showTab('dev')">Developer</button>
+</div>
+
+<div class="page active" id="page-optimizer">
+  <div style="height:10px"></div>
+
+  <!-- Setup banner (shown when no stopes) -->
+  <div class="setup-banner" id="setupBanner" style="display:none">
+    <h2>👋 Welcome — let's set up your shift</h2>
+    <p>This sheet is blank. Enter your targets and add stopes to get started. Changes only go live for everyone after you tap <strong>☁ Publish</strong>.</p>
+    <div class="setup-steps">
+      <div class="setup-step"><span class="setup-step-num">1</span>Set your Ounces Target, Plan Tonnes, and Ounces Factor below</div>
+      <div class="setup-step"><span class="setup-step-num">2</span>Add ore stopes using <strong>+ Add Stope</strong></div>
+      <div class="setup-step"><span class="setup-step-num">3</span>Add development headings if needed</div>
+      <div class="setup-step"><span class="setup-step-num">4</span>Tap <strong>☁ Publish</strong> to push your setup to all devices</div>
+    </div>
+  </div>
+
+  <!-- Targets -->
+  <div class="pgrid">
+    <div class="pcard pc-gold">
+      <label>Ounces Target</label>
+      <button id="ozT_btn" class="pc-numpad-btn" onclick="openNumpad('Ounces target','oz to achieve',document.getElementById('ozT').value,function(v){document.getElementById('ozT').value=v;document.getElementById('ozT_btn').textContent=v;document.getElementById('trkCnt').textContent=Math.floor(v/TF)||'--';markUnsaved();},false)">--</button>
+      <input type="hidden" id="ozT" value="">
+      <div class="hint">oz to achieve</div>
+    </div>
+    <div class="pcard pc-teal">
+      <label>Plan Tonnes</label>
+      <button id="dp_btn" class="pc-numpad-btn" onclick="openNumpad('Plan tonnes','total tonnes for the day',document.getElementById('dp').value,function(v){document.getElementById('dp').value=v;document.getElementById('dp_btn').textContent=v.toLocaleString();document.getElementById('trkCnt').textContent=Math.floor(v/TF);markUnsaved();},false)">--</button>
+      <input type="hidden" id="dp" value="">
+      <div class="hint"><span id="trkCnt">--</span> trucks available</div>
+    </div>
+    <div class="pcard pc-navy pfull">
+      <label>Ounces Factor</label>
+      <button id="ozF_btn" class="pc-numpad-btn" onclick="openNumpad('Ounces factor','g/t conversion multiplier',document.getElementById('ozF').value,function(v){document.getElementById('ozF').value=v;document.getElementById('ozF_btn').textContent=v;markUnsaved();drawStopes();drawDev();},true)">0.03215</button>
+      <input type="hidden" id="ozF" value="0.03215">
+      <div class="hint">g/t conversion multiplier</div>
+    </div>
+  </div>
+
+  <div class="tolrow">
+    <label>Tolerance</label>
+    <input type="range" id="tol" min="1" max="5" value="2" step="1">
+    <span class="tv" id="tolOut">+/-2%</span>
+  </div>
+  <div class="tolrow2">
+    <label>Extra trucks (optimizer buffer)</label>
+    <input type="range" id="extraTrucks" min="0" max="20" value="0" step="1">
+    <span class="tv" id="extraTrucksOut">0 tr</span>
+  </div>
+
+  <!-- Stope manager -->
+  <div class="card">
+    <div class="card-hdr navy">
+      <span>Stope Manager</span>
+      <div class="hdr-btns">
+        <button class="addbtn" id="addTogBtn">+ Add Stope</button>
+        <button class="adddevbtn" id="addDevTogBtn">+ Add Development</button>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <!-- Add stope form -->
+      <div class="addform" id="addForm">
+        <div style="font-size:11px;font-weight:bold;color:#1e40af;margin-bottom:8px">New Stope</div>
+        <div class="af-row">
+          <div class="af-field"><label>Stope (from Setup)</label>
+            <select id="nN" class="cin editable" style="width:100%;min-height:36px;font-size:12px;background:#fff" onchange="onStopeSelectChange()">
+              <option value="">-- Select stope --</option>
+              <option value="__manual__">+ Manual entry (not in Setup)</option>
+            </select>
+          </div>
+          <div class="af-field"><label>From Ring</label>
+            <select id="nRingFrom" class="cin editable" disabled style="width:100%;min-height:36px;font-size:12px;background:#fff;opacity:0.5">
+              <option value="">--</option>
+            </select>
+          </div>
+          <div class="af-field"><label>To Ring</label>
+            <select id="nRingTo" class="cin editable" disabled style="width:100%;min-height:36px;font-size:12px;background:#fff;opacity:0.5">
+              <option value="">Same as From</option>
+            </select>
+          </div>
+        </div>
+        <div class="af-row" id="nManualRow" style="display:none">
+          <div class="af-field"><label>Stope Name</label><input id="nNManual" placeholder="e.g. 3400_280_RDN" type="text"></div>
+          <div class="af-field"><label>Stock (t)</label>
+            <button class="af-numpad-btn" id="nS_btn" onclick="openNumpad('Stock','broken stock in tonnes',document.getElementById('nS').value||0,function(v){document.getElementById('nS').value=v;document.getElementById('nS_btn').textContent=Math.round(v).toLocaleString()+' t';},false)">Tap to enter</button>
+            <input type="hidden" id="nS" value=""></div>
+          <div class="af-field"><label>Grade (g/t)</label>
+            <button class="af-numpad-btn" id="nG_btn" onclick="openNumpad('Grade','grade in g/t',document.getElementById('nG').value||0,function(v){document.getElementById('nG').value=v;document.getElementById('nG_btn').textContent=v+' g/t';},true)">Tap to enter</button>
+            <input type="hidden" id="nG" value=""></div>
+        </div>
+        <div id="nRingPreview" style="display:none;background:#dbeafe;border-radius:7px;padding:8px 10px;margin-bottom:8px;font-size:11px;color:#1e3a8a"></div>
+        <button class="af-save" id="afSaveBtn">Add Stope</button>
+      </div>
+
+      <!-- Add development form -->
+      <div class="devform" id="devForm">
+        <div style="font-size:11px;font-weight:bold;color:#9a3412;margin-bottom:8px">New Development Heading</div>
+        <div class="dev-row">
+          <div class="dev-field"><label>Heading Name <span style="font-weight:normal;font-size:8px;color:#9a3412">(optional)</span></label><input id="dN" placeholder="Default: Dev Ore" type="text"></div>
+          <div class="dev-field"><label>No. of Cuts</label>
+            <button class="af-numpad-btn" id="dC_btn" onclick="openNumpad('Cuts','number of cuts (1 cut = 350t)',document.getElementById('dC').value||1,function(v){document.getElementById('dC').value=v;document.getElementById('dC_btn').textContent=v+' cuts';var s=v*350;document.getElementById('dS').value=s;document.getElementById('dS_btn').textContent=s.toLocaleString()+' t';},false)">1 cut</button>
+            <input type="hidden" id="dC" value="1"></div>
+          <div class="dev-field"><label>Stock (t) <span style="font-weight:normal;font-size:8px">auto</span></label>
+            <button class="af-numpad-btn" id="dS_btn" onclick="openNumpad('Stock','tonnes (auto from cuts, editable)',document.getElementById('dS').value||350,function(v){document.getElementById('dS').value=v;document.getElementById('dS_btn').textContent=v.toLocaleString()+' t';},false)">350 t</button>
+            <input type="hidden" id="dS" value="350"></div>
+          <div class="dev-field"><label>Grade (g/t)</label>
+            <button class="af-numpad-btn" id="dG_btn" onclick="openNumpad('Grade','grade in g/t',document.getElementById('dG').value||5.7,function(v){document.getElementById('dG').value=v;document.getElementById('dG_btn').textContent=v+' g/t';},true)">5.7 g/t</button>
+            <input type="hidden" id="dG" value="5.7"></div>
+        </div>
+        <div style="font-size:10px;color:#9a3412;margin-bottom:8px">1 cut = 350 t &nbsp;|&nbsp; Stock auto-calculates from cuts (editable)</div>
+        <button class="dev-save" id="devSaveBtn">Add Development Heading</button>
+      </div>
+
+      <!-- Stope table -->
+      <div style="font-size:11px;font-weight:bold;color:#1e3a8a;margin-bottom:6px;margin-top:4px">Ore Stopes</div>
+      <div class="stable-wrap">
+        <table class="stable" id="stopeTable">
+          <thead><tr>
+            <th>Stope</th><th>Mode</th><th>Stock (t)</th><th>Grade</th><th>Rate (t/day)</th><th title="Ounces at this rate (rate x grade x oz factor)">Rate Oz</th><th title="Max trucks">Max Trucks</th><th title="Truck Cap">Truck Cap</th><th>Status</th><th>Actions</th>
+          </tr></thead>
+          <tbody id="stbody"></tbody>
+          <tfoot id="stFoot">
+            <tr style="background:#e8edf5">
+              <td colspan="3" style="font-size:11px;font-weight:bold;color:#1e3a8a;padding:7px 9px;border:1px solid #e2e8f0">Total broken stock (active stopes only)</td>
+              <td colspan="7" style="font-size:13px;font-weight:bold;color:#0f6e56;padding:7px 9px;border:1px solid #e2e8f0" id="stTotalStock">0 t</td>
+            </tr>
+            <tr style="background:#d1fae5">
+              <td colspan="3" style="font-size:11px;font-weight:bold;color:#065f46;padding:7px 9px;border:1px solid #e2e8f0">Total Rate Ounces (active stopes only)</td>
+              <td colspan="7" style="font-size:13px;font-weight:bold;color:#065f46;padding:7px 9px;border:1px solid #e2e8f0" id="stTotalOz">0 oz</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div style="font-size:10px;color:#555;background:#f8fafc;border-radius:8px;padding:8px 12px;margin-top:6px;line-height:1.7;border:1px solid #e2e8f0">
+        <strong style="color:#1e3a8a">Max Trucks</strong> = how many full truck loads (51t each) the broken stock can fill.<br>
+        <strong style="color:#b45309">Truck Cap</strong> = your limit on trucks from this source. Lower to reserve stock or spread haul.
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- Development table -->
+      <div style="font-size:11px;font-weight:bold;color:#c2410c;margin-bottom:6px;margin-top:12px">Development Headings</div>
+      <div class="stable-wrap">
+        <table class="stable dev-table" id="devTable">
+          <thead><tr>
+            <th>Heading</th><th>Cuts</th><th>Stock (t)</th><th>Grade</th><th title="Ounces at this rate (cuts x 350t x grade x oz factor)">Rate Oz</th><th>Max Trucks</th><th>Truck Cap</th><th>Status</th><th>Actions</th>
+          </tr></thead>
+          <tbody id="devbody"></tbody>
+          <tfoot id="dvFoot">
+            <tr style="background:#fef3e8">
+              <td colspan="3" style="font-size:11px;font-weight:bold;color:#c2410c;padding:7px 9px;border:1px solid #e2e8f0">Total broken stock (active headings only)</td>
+              <td colspan="6" style="font-size:13px;font-weight:bold;color:#c2410c;padding:7px 9px;border:1px solid #e2e8f0" id="dvTotalStock">0 t</td>
+            </tr>
+            <tr style="background:#fed7aa">
+              <td colspan="3" style="font-size:11px;font-weight:bold;color:#9a3412;padding:7px 9px;border:1px solid #e2e8f0">Total Rate Ounces (active headings only)</td>
+              <td colspan="6" style="font-size:13px;font-weight:bold;color:#9a3412;padding:7px 9px;border:1px solid #e2e8f0" id="dvTotalOz">0 oz</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- Grand total ounces card -->
+      <div style="margin-top:14px;border-radius:13px;overflow:hidden;background:linear-gradient(135deg,#1e3a8a,#4c1d95);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-size:10px;font-weight:bold;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:.05em">Combined Rate Ounces (Stopes + Development)</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-top:2px">Sum of active stope ounces and active development ounces</div>
+        </div>
+        <div style="font-size:26px;font-weight:bold;color:#fff" id="grandTotalOz">0 oz</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Run -->
+  <div class="btn-row">
+    <button class="run-btn" id="runBtn">&#9654; Find Best 3</button>
+    <button class="exp-btn" id="expBtn" disabled>&#8595; CSV</button>
+    <button class="exp-btn" id="saveOptBtn" onclick="savePastOpt()" disabled style="background:linear-gradient(135deg,#b45309,#d97706)">&#128190; Save</button>
+    <button class="clear-btn" id="clearBtn" onclick="clearAll()">&#10006; Clear</button>
+    <button class="cloud-save-btn" id="publishBtn" onclick="publishToFirebase()">&#9729; Publish</button>
+  </div>
+
+  <!-- Results -->
+  <div id="results">
+    <div class="stmsg">Set your targets above and tap Find Best 3</div>
+  </div>
+</div>
+
+<!-- STOPE SETUP PAGE -->
+<div class="page" id="page-stopesetup">
+  <div style="height:10px"></div>
+  <div class="about-card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:4px">Monthly Stope Setup</h3>
+    <p style="margin-bottom:0">Set up each stope once per month with its rings, individual ring grades, and tonnes. This becomes the reference list the Optimizer's Add Stope form pulls from &mdash; pick a single ring or a range, and the average grade is calculated automatically.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr navy">
+      <span>Stopes</span>
+      <div class="hdr-btns">
+        <button class="addbtn" id="ssAddBtn" onclick="ssOpenNewStope()">+ Add Stope</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div id="ssStopeList"><div class="no-past">No stopes set up yet. Tap + Add Stope to begin.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Ring entry popup -->
+<div class="calc-overlay" id="ssRingOverlay">
+  <div class="calc-box" style="max-height:85vh;overflow-y:auto">
+    <div class="calc-title" id="ssRingTitle">Stope Rings</div>
+    <div class="calc-stope" id="ssRingSub"></div>
+
+    <div class="calc-section-lbl">Add a ring</div>
+    <div class="calc-add-row" style="grid-template-columns:1fr 1fr 1fr auto">
+      <div><label>Ring name</label><input type="text" id="ssRingName" placeholder="e.g. R01"></div>
+      <div><label>Grade (g/t)</label>
+        <button class="af-numpad-btn" id="ssRingGrade_btn" onclick="openNumpad('Grade','grade in g/t',document.getElementById('ssRingGrade').value||0,function(v){document.getElementById('ssRingGrade').value=v;document.getElementById('ssRingGrade_btn').textContent=v+' g/t';},true)">Tap to enter</button>
+        <input type="hidden" id="ssRingGrade" value="">
+      </div>
+      <div><label>Tonnes</label>
+        <button class="af-numpad-btn" id="ssRingTonnes_btn" onclick="openNumpad('Tonnes','tonnes for this ring',document.getElementById('ssRingTonnes').value||0,function(v){document.getElementById('ssRingTonnes').value=v;document.getElementById('ssRingTonnes_btn').textContent=Math.round(v).toLocaleString()+' t';},false)">Tap to enter</button>
+        <input type="hidden" id="ssRingTonnes" value="">
+      </div>
+      <button class="calc-add-btn" onclick="ssAddRing()">+ Add</button>
+    </div>
+
+    <div class="calc-section-lbl">Rings in this stope</div>
+    <div class="stable-wrap" style="margin-bottom:10px">
+      <table class="stable" id="ssRingTable" style="min-width:320px">
+        <thead><tr><th>Ring</th><th>Grade (g/t)</th><th>Tonnes</th><th>Actions</th></tr></thead>
+        <tbody id="ssRingBody"></tbody>
+        <tfoot><tr style="background:#e8edf5">
+          <td style="font-size:11px;font-weight:bold;color:#1e3a8a;padding:7px 9px;border:1px solid #e2e8f0">Total</td>
+          <td style="padding:7px 9px;border:1px solid #e2e8f0"></td>
+          <td style="font-size:12px;font-weight:bold;color:#0f6e56;padding:7px 9px;border:1px solid #e2e8f0" id="ssRingTotalTonnes">0 t</td>
+          <td style="border:1px solid #e2e8f0"></td>
+        </tr></tfoot>
+      </table>
+    </div>
+
+    <div class="calc-footer">
+      <button class="calc-cancel" onclick="ssCloseRingPopup()">Close</button>
+      <button class="calc-save" onclick="ssSaveStope()">Save Stope</button>
+    </div>
+  </div>
+</div>
+
+<!-- DESTINATIONS PAGE -->
+<div class="page" id="page-dest">
+  <div style="height:10px"></div>
+  <div class="about-card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:4px">Material Destinations &amp; Tip Status</h3>
+    <p style="margin-bottom:0">Underground material movement is constrained by where it can go. Set tip and surface destination availability here &mdash; the Optimizer factors this into how many trucks each source can realistically run, based on cycle time and the 18-hour working day (2 x 9-hour shifts).</p>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr orange"><span>KRS &mdash; Ore Pass / Skip Hoist</span></div>
+    <div class="card-body" id="destKRS"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr purple"><span>KMS &mdash; Ore Pass / Skip Hoist</span></div>
+    <div class="card-body" id="destKMS"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr green"><span>Surface Destinations</span></div>
+    <div class="card-body" id="destSurface"></div>
+  </div>
+
+  <div style="font-size:10px;color:#555;background:#f8fafc;border-radius:8px;padding:10px 12px;margin-top:4px;line-height:1.8;border:1px solid #e2e8f0">
+    <strong style="color:#1e3a8a">Why mark a destination unavailable?</strong><br>
+    &bull; <strong>Changing material</strong> &mdash; tip must be emptied before switching between ore and waste<br>
+    &bull; <strong>Maintenance</strong> &mdash; scheduled servicing of chute, conveyor, or skip<br>
+    &bull; <strong>Breakdown</strong> &mdash; unplanned equipment failure<br>
+    &bull; <strong>Full</strong> &mdash; tip has reached capacity and needs to be drawn down first
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="card">
+    <div class="card-hdr navy"><span>Haulage Capacity Calculator</span></div>
+    <div class="card-body">
+      <p style="font-size:11px;color:#555;margin-bottom:10px;line-height:1.6">Select a level and destination to see the maximum trucks per day that route can support, based on its cycle time and the 18-hour working day (9hr x 2 shifts).</p>
+      <div class="af-row" style="grid-template-columns:1fr 1fr">
+        <div class="af-field"><label>Level</label>
+          <select id="hcLevel" class="cin editable" style="width:100%;min-height:36px;font-size:12px;background:#fff" onchange="updateHaulageCalc()"></select>
+        </div>
+        <div class="af-field"><label>Destination</label>
+          <select id="hcDest" class="cin editable" style="width:100%;min-height:36px;font-size:12px;background:#fff" onchange="updateHaulageCalc()">
+            <option value="ore_pad">Ore Pad</option>
+            <option value="waste_dump">Waste Dump</option>
+            <option value="krs">KRS</option>
+            <option value="other">Other (315/331 Pass + Backfill)</option>
+          </select>
+        </div>
+      </div>
+      <div id="hcResult"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAST RUNS PAGE -->
+<div class="page" id="page-past">
+  <div style="height:10px"></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <div style="font-size:14px;font-weight:bold;color:#1e3a8a">Past Optimizations</div>
+    <button onclick="clearAllPast()" style="background:#fee2e2;border:none;border-radius:7px;color:#dc2626;font-size:11px;font-weight:bold;padding:5px 10px;cursor:pointer">Clear all</button>
+  </div>
+  <div id="pastList"><div class="no-past">No saved optimizations yet.</div></div>
+</div>
+
+<!-- ABOUT PAGE -->
+
+<div class="page" id="page-about">
+  <div style="height:10px"></div>
+  <div class="about-card">
+    <h3>What does this app do?</h3>
+    <p>The Ounces Optimizer helps you decide which stopes and development headings to haul ore from — and how many trucks to assign to each — to hit your daily ounces target.</p>
+  </div>
+  <div class="about-card">
+    <h3>How ounces are calculated</h3>
+    <div class="formula-box"><code>Ounces = Tonnes x Grade x Ounces Factor</code></div>
+    <p style="margin-top:8px">Where:</p>
+    <ul>
+      <li>Tonnes = Trucks x Truck Factor (51 t/truck)</li>
+      <li>Grade = g/t of the stope or development heading</li>
+      <li>Ounces Factor = 0.03215</li>
+      <li>Development: 1 cut = 350 t | Default grade = 5.7 g/t</li>
+    </ul>
+  </div>
+  <div class="about-card">
+    <h3>How to use</h3>
+    <ul>
+      <li>Set <b>Ounces Target</b>, <b>Plan Tonnes</b>, <b>Ounces Factor</b></li>
+      <li>Add ore stopes with Stock and Grade</li>
+      <li>Add development headings by entering number of cuts</li>
+      <li>Edit any stope or heading inline using the pencil button</li>
+      <li>Toggle ON/OFF and set Cap to limit trucks per source</li>
+      <li>Tap <b>&#9729; Publish</b> to push changes to all devices</li>
+      <li>Tap <b>Find Best 3</b></li>
+    </ul>
+  </div>
+
+  <div class="about-card">
+    <h3>Stope Setup &amp; Ring Ranges</h3>
+    <p>The <b>Stope Setup</b> tab is where you record each stope's full monthly ring data once: ring name, grade, and tonnes for every ring in that stope. This becomes the master reference the Optimizer pulls from.</p>
+    <p>In the Optimizer's <b>Add Stope</b> form, select a stope from Setup, then enter either:</p>
+    <ul>
+      <li><b>A single ring</b> (e.g. <code>R03</code>) &mdash; pulls that ring's exact tonnes and grade</li>
+      <li><b>A ring range</b> (e.g. <code>R01-R04</code>) &mdash; combines all rings in that range and computes a tonnage-weighted average grade</li>
+    </ul>
+    <div class="formula-box"><code>Average Grade = Σ(Ring Tonnes x Ring Grade) / Σ(Ring Tonnes)</code></div>
+    <p style="margin-top:8px">This means richer, larger rings pull the blended grade more strongly than smaller or leaner ones &mdash; the same way actual mill feed grade behaves when stock from multiple rings is mixed.</p>
+  </div>
+
+  <div class="about-card">
+    <h3>Material Movement Constraints (Underground Mine)</h3>
+    <p>Obuasi is an underground operation, so getting broken ore and waste to surface isn't just about truck count &mdash; it's also about where that material can physically go and how fast it can get there. The <b>Destinations</b> tab models this.</p>
+  </div>
+
+  <div class="about-card">
+    <h3>Ore Passes: KRS &amp; KMS</h3>
+    <p>Ore passes are vertical conduits between levels. Trucks tip material at an upper-level tipping point; it falls through a chute at a lower draw point onto a conveyor, which feeds a skip that hoists it to surface.</p>
+    <ul>
+      <li><b>KRS</b> has two tips &mdash; <b>Tip 6</b> (1,000 t capacity) and <b>Tip 7</b> (3,500 t capacity). Tipping points sit on 2400L; draw points and chutes are on 2600L.</li>
+      <li>Either tip can handle <b>ore or waste</b>, switched according to operational priority. Switching material types requires the tip to be fully emptied first.</li>
+      <li><b>KMS</b> is currently <b>unavailable</b> due to an incident. It remains in the system so it can be re-enabled once it returns to service.</li>
+    </ul>
+  </div>
+
+  <div class="about-card">
+    <h3>Surface Destinations</h3>
+    <p>Material that doesn't go through an ore pass can be hauled directly to surface stockpiles:</p>
+    <ul>
+      <li><b>Ore Pad</b> &mdash; surface stockpile for ore</li>
+      <li><b>Waste Dump</b> &mdash; surface dump for waste rock</li>
+    </ul>
+  </div>
+
+  <div class="about-card">
+    <h3>Why a destination can be unavailable</h3>
+    <ul>
+      <li><b>Changing material</b> &mdash; the tip is being emptied before switching between ore and waste</li>
+      <li><b>Maintenance</b> &mdash; scheduled servicing of the chute, conveyor, or skip system</li>
+      <li><b>Breakdown</b> &mdash; unplanned equipment failure</li>
+      <li><b>Full</b> &mdash; the tip has reached its tonnage capacity and must be drawn down before it can accept more</li>
+    </ul>
+    <p>Mark a destination unavailable in the <b>Destinations</b> tab and select the reason &mdash; this keeps everyone on the same page about where material can and can't be tipped right now.</p>
+  </div>
+
+  <div class="about-card">
+    <h3>The 18-Hour Working Day</h3>
+    <p>Trucking doesn't run a full 24 hours &mdash; the operational day is <b>18 hours</b>, split into two 9-hour shifts. All haulage capacity calculations (max trucks per route, per level, per destination) are based on this 18-hour window, not a full day.</p>
+    <div class="formula-box"><code>Max Trucks/Day = 18 hrs ÷ Cycle Time (hrs)</code></div>
+    <p style="margin-top:8px">Cycle time is the average time for a truck to load, haul, dump, and return for a given level-to-destination route. The <b>Haulage Capacity Calculator</b> in the Destinations tab lets you pick any level and destination to see the maximum trucks &mdash; and tonnes &mdash; that route can realistically support in a day.</p>
+    <p>If a level shows no cycle time for a destination, it means material movement hasn't started from that level to that destination yet, so no haulage rate exists for it.</p>
+  </div>
+
+  <div class="about-card">
+    <h3>Sync & publishing</h3>
+    <p>All changes you make are <strong>local only</strong> until you tap <strong>☁ Publish</strong>. Once published, all devices (current and new) will load your setup. The sync indicator in the top bar shows whether your local state matches what's on the server.</p>
+  </div>
+</div>
+
+<!-- DEVELOPER PAGE -->
+<div class="page" id="page-dev">
+  <div class="card">
+    <div class="card-hdr orange"><span>⚙ AI Developer</span></div>
+    <div class="card-body">
+      <p style="font-size:11px;color:#555;line-height:1.6;margin-bottom:10px">Describe a change you want made to this app. Claude will generate an updated version, which you can preview locally before publishing. <strong>Publish downloads the updated file</strong> — you then push it to GitHub yourself to go live.</p>
+
+      <div id="devSettingsBox" style="background:#fff7ed;border:1.5px solid #fed7aa;border-radius:10px;padding:10px 12px;margin-bottom:12px">
+        <div style="font-size:9px;font-weight:bold;color:#9a3412;text-transform:uppercase;margin-bottom:5px">Claude API Key</div>
+        <div style="display:flex;gap:6px">
+          <input id="devApiKeyInput" type="password" placeholder="sk-ant-..." style="flex:1;font-size:12px;padding:7px 8px;border:1.5px solid #fdba74;border-radius:7px;outline:none;background:#fff;min-height:36px;color:#111">
+          <button onclick="saveDevApiKey()" style="background:#c2410c;border:none;border-radius:7px;color:#fff;font-size:11px;font-weight:bold;padding:0 12px;cursor:pointer;min-height:36px">Save</button>
+        </div>
+        <p style="font-size:9px;color:#9a3412;margin-top:6px;line-height:1.5">Saved only in this browser's local storage — never uploaded anywhere, never included when you publish. Keep this device secure since anyone with access to it can see the key.</p>
+      </div>
+
+      <div id="devChatLog" style="display:flex;flex-direction:column;gap:8px;max-height:420px;overflow-y:auto;margin-bottom:10px;padding:4px"></div>
+
+      <div id="devPreviewBox" style="display:none;background:#eff6ff;border:1.5px solid #93c5fd;border-radius:10px;padding:10px 12px;margin-bottom:10px">
+        <div style="font-size:9px;font-weight:bold;color:#1e40af;text-transform:uppercase;margin-bottom:6px">Local Preview</div>
+        <iframe id="devPreviewFrame" style="width:100%;height:360px;border:1.5px solid #bfdbfe;border-radius:8px;background:#fff" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <button onclick="acceptStagedChange()" style="flex:1;background:#16a34a;border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:bold;padding:9px;cursor:pointer;min-height:40px">✓ Looks good — keep staged</button>
+          <button onclick="discardStagedChange()" style="flex:1;background:#dc2626;border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:bold;padding:9px;cursor:pointer;min-height:40px">✕ Discard</button>
+        </div>
+      </div>
+
+      <div class="af-row" style="grid-template-columns:1fr;margin-bottom:8px">
+        <textarea id="devInput" placeholder="e.g. Add a dark mode toggle to the nav bar" style="width:100%;min-height:64px;font-size:12px;padding:8px;border:1.5px solid #fdba74;border-radius:8px;outline:none;resize:vertical;font-family:inherit;color:#111"></textarea>
+      </div>
+      <button class="dev-save" id="devSendBtn" onclick="sendDevMessage()">Send to Claude</button>
+
+      <button id="devPublishBtn" onclick="publishDevChange()" disabled style="width:100%;margin-top:10px;background:#94a3b8;border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:bold;padding:11px;cursor:pointer;min-height:46px">☁ Publish (Download Updated File)</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Stock calculator popup -->
+<div class="calc-overlay" id="calcOverlay">
+  <div class="calc-box">
+    <div class="calc-title">Stock Calculator</div>
+    <div class="calc-stope" id="calcStopeName"></div>
+    <div class="calc-current" style="flex-direction:column;align-items:stretch;gap:6px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span>Current broken stock (editable)</span>
+        <span style="font-size:10px;color:#0f6e56;font-weight:bold">New total: <span id="calcRunningTotal">0 t</span></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button id="calcBaseBtn" onclick="openNumpadForBase()"
+          style="font-size:18px;font-weight:bold;color:#0f6e56;border:2px solid #6ee7b7;border-radius:8px;padding:6px 10px;width:100%;outline:none;background:#fff;text-align:left;cursor:pointer;-webkit-appearance:none">0</button>
+        <input type="hidden" id="calcBaseInput" value="0">
+        <span style="font-size:12px;color:#555;white-space:nowrap">t (base)</span>
+      </div>
+      <div style="font-size:10px;color:#888">Edit this to correct or reset the base stock, then add blasts on top.</div>
+    </div>
+    <div class="calc-section-lbl">Add tonnes (e.g. from a blast)</div>
+    <div class="calc-add-row">
+      <div><label>Tonnes fired</label>
+        <button id="calcAddTBtn" onclick="openNumpadForCalcT()"
+          style="width:100%;font-size:13px;padding:7px 8px;border:1.5px solid #e2e8f0;border-radius:7px;background:#f8fafc;color:#1e3a8a;text-align:left;cursor:pointer;font-weight:bold;-webkit-appearance:none">Tap to enter</button>
+        <input type="hidden" id="calcAddT" value="">
+      </div>
+      <div><label>Note (optional)</label><input type="text" id="calcAddNote" placeholder="e.g. Ring 3 blast"></div>
+      <button class="calc-add-btn" onclick="calcAddEntry()">+ Add</button>
+    </div>
+    <div class="calc-section-lbl">History</div>
+    <div class="calc-log" id="calcLog"></div>
+    <div class="calc-footer">
+      <button class="calc-cancel" onclick="closeCalc()">Cancel</button>
+      <button class="calc-save" onclick="saveCalc()">Save Stock</button>
+    </div>
+  </div>
+</div>
+
+<!-- Numpad overlay -->
+<div class="numpad-overlay" id="numpadOvl">
+  <div class="numpad-box">
+    <div class="numpad-title" id="numpadTitle">Enter value</div>
+    <div class="numpad-sub" id="numpadSub"></div>
+    <div class="numpad-display" id="numpadDisplay">0</div>
+    <div class="numpad-grid">
+      <button class="npbtn num" onclick="npKey('7')">7</button>
+      <button class="npbtn num" onclick="npKey('8')">8</button>
+      <button class="npbtn num" onclick="npKey('9')">9</button>
+      <button class="npbtn del" onclick="npDel()">&#9003;</button>
+      <button class="npbtn num" onclick="npKey('4')">4</button>
+      <button class="npbtn num" onclick="npKey('5')">5</button>
+      <button class="npbtn num" onclick="npKey('6')">6</button>
+      <button class="npbtn op" onclick="npKey('+')">+</button>
+      <button class="npbtn num" onclick="npKey('1')">1</button>
+      <button class="npbtn num" onclick="npKey('2')">2</button>
+      <button class="npbtn num" onclick="npKey('3')">3</button>
+      <button class="npbtn op" onclick="npKey('-')">-</button>
+      <button class="npbtn num zero" onclick="npKey('0')">0</button>
+      <button class="npbtn num" onclick="npKey('.')">.</button>
+      <button class="npbtn op" onclick="npEval()">=</button>
+      <button class="npbtn ok" onclick="npConfirm()">OK &#10003;</button>
+    </div>
+    <button class="np-cancel" onclick="npClose()">Cancel</button>
+  </div>
+</div>
+
+<!-- Save prompt toast -->
+<div class="save-toast" id="saveToast">
+  <span class="save-toast-icon">💾</span>
+  <div class="save-toast-text">
+    <span id="saveToastMsg">Happy with this result?</span>
+    <small>Tap Save to keep it in Past Runs</small>
+  </div>
+  <button class="save-toast-btn" onclick="savePastOpt();dismissToast()">Save now</button>
+  <button class="save-toast-close" onclick="dismissToast()">✕</button>
+</div>
+
+<script>
+// ─── Firebase init ───────────────────────────────────────────────
+var firebaseConfig = {
+  apiKey: "AIzaSyCdhzhaQJW28NxsXLWCv2qcjsextL_pDzA",
+  authDomain: "ounces-optimizer.firebaseapp.com",
+  databaseURL: "https://ounces-optimizer-default-rtdb.firebaseio.com",
+  projectId: "ounces-optimizer",
+  storageBucket: "ounces-optimizer.firebasestorage.app",
+  messagingSenderId: "1040225654012",
+  appId: "1:1040225654012:web:7d599682dcbd0e17b73379"
+};
+firebase.initializeApp(firebaseConfig);
+var db = firebase.database();
+var SHEET_REF = db.ref("sheetData");
+
+// ─── App state ───────────────────────────────────────────────────
+var TF = 51;
+var RATE_REMOTE = 800;
+var RATE_MANUAL = 1200;
+var CURRENT_USER = "Team";
+var calcTargetIdx = -1;
+var calcTargetType = "stope";
+var calcEntries = [];
+var DEV_T_PER_CUT = 350;
+var DEV_DEFAULT_GRADE = 5.7;
+
+var ST = [];   // ore stopes — starts blank
+var DV = [];   // development headings — starts blank
+
+var tog = {};
+var devtog = {};
+var caps = {};
+var devcaps = {};
+var sols = [];
+var act = [];
+var lastBestResult = null; // stores best-possible when target not reached
+var addOpen = false;
+var devOpen = false;
+var editingStope = -1;
+var editingDev = -1;
+var _unsaved = false;
+
+// ─── Shift / haulage constants ────────────────────────────────────
+var SHIFT_HOURS = 9;
+var SHIFTS_PER_DAY = 2;
+var WORKING_HOURS_PER_DAY = SHIFT_HOURS * SHIFTS_PER_DAY; // 18 hours
+
+// ─── Level cycle-time reference data (hours per cycle, per destination) ──
+// Source: truck cycle study. null = material movement not yet started from that level/destination.
+var LEVEL_CYCLE_DATA = [{"level":"1400","cycle":{"ore_pad":null,"waste_dump":0.8857,"krs":null,"other":null}},{"level":"1600","cycle":{"ore_pad":1.25,"waste_dump":1.1892,"krs":0.6735,"other":0.8585}},{"level":"1601","cycle":{"ore_pad":null,"waste_dump":1.24,"krs":null,"other":0.8788}},{"level":"1700","cycle":{"ore_pad":1.1574,"waste_dump":1.6333,"krs":0.7492,"other":null}},{"level":"1701","cycle":{"ore_pad":1.1667,"waste_dump":1.3212,"krs":0.6833,"other":null}},{"level":"1801","cycle":{"ore_pad":1.1522,"waste_dump":1.5,"krs":0.6917,"other":0.5}},{"level":"2200","cycle":{"ore_pad":1.6814,"waste_dump":null,"krs":0.4,"other":0.8}},{"level":"2600","cycle":{"ore_pad":1.6133,"waste_dump":2.0226,"krs":0.637,"other":0.8861}},{"level":"2700","cycle":{"ore_pad":1.7703,"waste_dump":1.9255,"krs":0.4988,"other":0.8018}},{"level":"2800","cycle":{"ore_pad":1.7879,"waste_dump":1.8989,"krs":0.5282,"other":0.713}},{"level":"2900","cycle":{"ore_pad":2.112,"waste_dump":1.9355,"krs":0.5278,"other":0.7771}},{"level":"2901","cycle":{"ore_pad":1.8549,"waste_dump":1.9553,"krs":0.5508,"other":1.2766}},{"level":"3200","cycle":{"ore_pad":1.96,"waste_dump":1.96,"krs":1.1053,"other":0.7241}},{"level":"3201","cycle":{"ore_pad":null,"waste_dump":3.8857,"krs":1.15,"other":0.784}},{"level":"3300","cycle":{"ore_pad":2.25,"waste_dump":2.4636,"krs":1.0746,"other":0.7914}},{"level":"3400","cycle":{"ore_pad":2.3637,"waste_dump":2.376,"krs":1.0565,"other":0.8588}},{"level":"3500","cycle":{"ore_pad":2.418,"waste_dump":2.3016,"krs":1.113,"other":0.9967}},{"level":"3501","cycle":{"ore_pad":2.216,"waste_dump":2.2429,"krs":0.9623,"other":0.808}},{"level":"3600","cycle":{"ore_pad":2.5487,"waste_dump":2.3882,"krs":1.1034,"other":0.6837}},{"level":"3602","cycle":{"ore_pad":2.3978,"waste_dump":2.5032,"krs":1.0679,"other":0.8}},{"level":"3700","cycle":{"ore_pad":2.4727,"waste_dump":2.4178,"krs":1.255,"other":0.8346}},{"level":"3701","cycle":{"ore_pad":2.4649,"waste_dump":2.5457,"krs":1.1596,"other":0.8098}},{"level":"3800","cycle":{"ore_pad":2.28,"waste_dump":2.4588,"krs":1.139,"other":0.886}},{"level":"3900","cycle":{"ore_pad":2.419,"waste_dump":2.7655,"krs":1.182,"other":0.8561}},{"level":"3901","cycle":{"ore_pad":null,"waste_dump":2.2,"krs":1.1887,"other":null}},{"level":"4500","cycle":{"ore_pad":null,"waste_dump":2.8973,"krs":1.4811,"other":1.2441}}];
+function getLevelCycle(levelStr) {
+  for (var i = 0; i < LEVEL_CYCLE_DATA.length; i++) {
+    if (LEVEL_CYCLE_DATA[i].level === String(levelStr)) { return LEVEL_CYCLE_DATA[i].cycle; }
+  }
+  return null;
+}
+function maxTrucksPerDay(cycleHours) {
+  if (!cycleHours || cycleHours <= 0) { return null; }
+  return Math.floor(WORKING_HOURS_PER_DAY / cycleHours);
+}
+
+// ─── Stope Setup (monthly reference data) ─────────────────────────
+var STOPE_SETUP = []; // [{name, rings:[{id,name,grade,tonnes}]}]
+var ssEditingStopeIdx = -1;
+var ssCurrentRings = [];
+
+// ─── Destinations / Tips state ────────────────────────────────────
+var DESTINATIONS = {
+  krs_tip6: { name: "KRS Tip 6", capacity: 1000, material: "ore", available: true, reason: "" },
+  krs_tip7: { name: "KRS Tip 7", capacity: 3500, material: "ore", available: true, reason: "" },
+  kms: { name: "KMS", capacity: 0, material: "ore", available: false, reason: "breakdown" },
+  ore_pad: { name: "Ore Pad", capacity: null, available: true, reason: "" },
+  waste_dump: { name: "Waste Dump", capacity: null, available: true, reason: "" }
+};
+
+// ─── Sync status UI ─────────────────────────────────────────────
+function setSyncStatus(state, label) {
+  var el = document.getElementById("syncStatus");
+  var lbl = document.getElementById("syncLabel");
+  el.className = "sync-status " + state;
+  el.innerHTML = '<span class="sync-dot"></span><span>' + label + '</span>';
+}
+
+function markUnsaved() {
+  _unsaved = true;
+  setSyncStatus("sync-unsaved", "Unsaved changes");
+}
+
+// ─── Firebase publish & subscribe ────────────────────────────────
+function publishToFirebase() {
+  setSyncStatus("sync-saving", "Publishing...");
+  var ozT = document.getElementById("ozT").value;
+  var dp  = document.getElementById("dp").value;
+  var ozF = document.getElementById("ozF").value;
+  var payload = {
+    ozT: ozT, dp: dp, ozF: ozF,
+    tol: document.getElementById("tol").value,
+    extraTrucks: document.getElementById("extraTrucks").value,
+    ST: ST, DV: DV,
+    tog: tog, devtog: devtog,
+    caps: caps, devcaps: devcaps,
+    STOPE_SETUP: STOPE_SETUP,
+    DESTINATIONS: DESTINATIONS,
+    publishedAt: new Date().toISOString(),
+    publishedBy: CURRENT_USER
+  };
+  SHEET_REF.set(payload).then(function() {
+    _unsaved = false;
+    setSyncStatus("sync-saved", "Synced");
+  }).catch(function(err) {
+    setSyncStatus("sync-unsaved", "Publish failed");
+    alert("Publish failed: " + err.message);
+  });
+}
+
+function applyFirebaseSnapshot(data) {
+  if (!data) { checkSetupBanner(); return; }
+  ST = data.ST || [];
+  DV = data.DV || [];
+  tog = data.tog || {};
+  devtog = data.devtog || {};
+  caps = data.caps || {};
+  devcaps = data.devcaps || {};
+  STOPE_SETUP = data.STOPE_SETUP || [];
+  if (data.DESTINATIONS) {
+    Object.keys(DESTINATIONS).forEach(function(k) {
+      if (data.DESTINATIONS[k]) { DESTINATIONS[k] = data.DESTINATIONS[k]; }
+    });
+  }
+
+  // Apply targets
+  if (data.ozT) {
+    document.getElementById("ozT").value = data.ozT;
+    document.getElementById("ozT_btn").textContent = data.ozT;
+    document.getElementById("trkCnt").textContent = data.dp ? Math.floor(+data.dp / TF) : "--";
+  }
+  if (data.dp) {
+    document.getElementById("dp").value = data.dp;
+    document.getElementById("dp_btn").textContent = (+data.dp).toLocaleString();
+    document.getElementById("trkCnt").textContent = Math.floor(+data.dp / TF);
+  }
+  if (data.ozF) {
+    document.getElementById("ozF").value = data.ozF;
+    document.getElementById("ozF_btn").textContent = data.ozF;
+  }
+  if (data.tol) {
+    document.getElementById("tol").value = data.tol;
+    document.getElementById("tolOut").textContent = "+/-" + data.tol + "%";
+  }
+  if (data.extraTrucks !== undefined) {
+    document.getElementById("extraTrucks").value = data.extraTrucks;
+    document.getElementById("extraTrucksOut").textContent = +data.extraTrucks === 0 ? "0 tr" : "+" + data.extraTrucks + " tr";
+  }
+
+  _unsaved = false;
+  setSyncStatus("sync-saved", "Synced");
+  drawStopes();
+  drawDev();
+  drawStopeSetup();
+  drawDestinations();
+  checkSetupBanner();
+}
+
+// Listen for real-time updates from other clients
+SHEET_REF.on("value", function(snapshot) {
+  // Only apply if we don't have unsaved local changes
+  if (!_unsaved) {
+    applyFirebaseSnapshot(snapshot.val());
+  }
+});
+
+function checkSetupBanner() {
+  var banner = document.getElementById("setupBanner");
+  if (ST.length === 0 && DV.length === 0) {
+    banner.style.display = "block";
+  } else {
+    banner.style.display = "none";
+  }
+}
+
+// ─── Helpers ─────────────────────────────────────────────────────
+function has(x)   { return x.s > 0 && x.g; }
+function smx(x)   { return Math.floor(x.s / TF); }
+function gc(g)    { return !g ? "gno" : g >= 10 ? "ghi" : g >= 7 ? "gmid" : "glo"; }
+function gpill(g) { return '<span class="' + gc(g) + '">' + (g ? g + " g/t" : "--") + "</span>"; }
+
+var BF = ["#b45309","#0f6e56","#4c1d95"];
+var BC = ["#b45309","#0f6e56","#4c1d95","#1e3a8a","#be185d","#0369a1","#065f46","#9a3412"];
+
+// ─── Tab switching ────────────────────────────────────────────────
+function showTab(name) {
+  ["optimizer","past","about","stopesetup","dest","dev"].forEach(function(t) {
+    document.getElementById("page-" + t).className = "page" + (name === t ? " active" : "");
+  });
+  document.getElementById("tab1").className = "tab" + (name === "optimizer" ? " active" : "");
+  document.getElementById("tab3").className = "tab" + (name === "past" ? " active" : "");
+  document.getElementById("tab2").className = "tab" + (name === "about" ? " active" : "");
+  document.getElementById("tab4").className = "tab" + (name === "stopesetup" ? " active" : "");
+  document.getElementById("tab5").className = "tab" + (name === "dest" ? " active" : "");
+  document.getElementById("tab6").className = "tab" + (name === "dev" ? " active" : "");
+  if (name === "past") renderPast();
+  if (name === "stopesetup") drawStopeSetup();
+  if (name === "dest") { drawDestinations(); populateHaulageLevelDropdown(); }
+  if (name === "dev") { loadDevApiKey(); }
+}
+
+// ─── Add stope form ───────────────────────────────────────────────
+function toggleAdd() {
+  addOpen = !addOpen;
+  if (addOpen) {
+    devOpen = false; document.getElementById("devForm").className = "devform";
+    populateStopeDropdown();
+  }
+  document.getElementById("addForm").className = "addform" + (addOpen ? " open" : "");
+}
+
+function populateStopeDropdown() {
+  var sel = document.getElementById("nN");
+  sel.innerHTML = '<option value="">-- Select stope --</option><option value="__manual__">+ Manual entry (not in Setup)</option>';
+  STOPE_SETUP.forEach(function(st) {
+    var alreadyUsed = ST.some(function(x){ return x.setupName === st.name; });
+    var o = document.createElement("option");
+    o.value = st.name;
+    o.textContent = st.name + (alreadyUsed ? " (in use)" : "");
+    sel.appendChild(o);
+  });
+}
+
+function onStopeSelectChange() {
+  var val = document.getElementById("nN").value;
+  var manualRow = document.getElementById("nManualRow");
+  var preview = document.getElementById("nRingPreview");
+  if (val === "__manual__") {
+    manualRow.style.display = "grid";
+    resetRingDropdowns();
+    preview.style.display = "none";
+  } else if (val === "") {
+    manualRow.style.display = "none";
+    resetRingDropdowns();
+    preview.style.display = "none";
+  } else {
+    manualRow.style.display = "none";
+    populateRingDropdowns(val);
+    preview.style.display = "none";
+  }
+}
+
+function resetRingDropdowns() {
+  var fromSel = document.getElementById("nRingFrom");
+  var toSel = document.getElementById("nRingTo");
+  fromSel.innerHTML = '<option value="">--</option>';
+  fromSel.disabled = true; fromSel.style.opacity = "0.5";
+  toSel.innerHTML = '<option value="">Same as From</option>';
+  toSel.disabled = true; toSel.style.opacity = "0.5";
+}
+
+function populateRingDropdowns(stopeName) {
+  var fromSel = document.getElementById("nRingFrom");
+  var toSel = document.getElementById("nRingTo");
+  var st = STOPE_SETUP.find(function(s){ return s.name === stopeName; });
+  fromSel.innerHTML = '<option value="">--</option>';
+  toSel.innerHTML = '<option value="">Same as From</option>';
+  if (!st || !st.rings.length) {
+    fromSel.disabled = true; fromSel.style.opacity = "0.5";
+    toSel.disabled = true; toSel.style.opacity = "0.5";
+    return;
+  }
+  st.rings.forEach(function(r) {
+    var o1 = document.createElement("option"); o1.value = r.name; o1.textContent = r.name;
+    fromSel.appendChild(o1);
+    var o2 = document.createElement("option"); o2.value = r.name; o2.textContent = r.name;
+    toSel.appendChild(o2);
+  });
+  fromSel.disabled = false; fromSel.style.opacity = "1";
+  toSel.disabled = false; toSel.style.opacity = "1";
+}
+
+document.getElementById("nRingFrom").addEventListener("change", updateRingPreview);
+document.getElementById("nRingTo").addEventListener("change", updateRingPreview);
+
+function parseRingRange(stopeName, ringsStr) {
+  var st = STOPE_SETUP.find(function(s){ return s.name === stopeName; });
+  if (!st) return null;
+  ringsStr = ringsStr.trim().toUpperCase();
+  if (!ringsStr) return null;
+  var selected = [];
+  if (ringsStr.indexOf("-") >= 0) {
+    var parts = ringsStr.split("-").map(function(p){return p.trim();});
+    if (parts.length !== 2) return null;
+    var idxA = st.rings.findIndex(function(r){ return r.name.toUpperCase() === parts[0]; });
+    var idxB = st.rings.findIndex(function(r){ return r.name.toUpperCase() === parts[1]; });
+    if (idxA < 0 || idxB < 0) return null;
+    var lo = Math.min(idxA, idxB), hi = Math.max(idxA, idxB);
+    selected = st.rings.slice(lo, hi + 1);
+  } else {
+    var idx = st.rings.findIndex(function(r){ return r.name.toUpperCase() === ringsStr; });
+    if (idx < 0) return null;
+    selected = [st.rings[idx]];
+  }
+  if (!selected.length) return null;
+  var totalT = selected.reduce(function(a,r){return a+r.tonnes;}, 0);
+  var avgG = totalT > 0 ? selected.reduce(function(a,r){return a+r.tonnes*r.grade;},0) / totalT : 0;
+  return { rings: selected, totalTonnes: totalT, avgGrade: Math.round(avgG * 100) / 100 };
+}
+
+function updateRingPreview() {
+  var stopeName = document.getElementById("nN").value;
+  var fromVal = document.getElementById("nRingFrom").value;
+  var toVal = document.getElementById("nRingTo").value;
+  var preview = document.getElementById("nRingPreview");
+  if (!stopeName || stopeName === "__manual__" || !fromVal) { preview.style.display = "none"; return; }
+  var ringsStr = (toVal && toVal !== fromVal) ? (fromVal + "-" + toVal) : fromVal;
+  var result = parseRingRange(stopeName, ringsStr);
+  if (!result) {
+    preview.style.display = "block";
+    preview.style.background = "#fee2e2"; preview.style.color = "#dc2626";
+    preview.textContent = "Ring(s) not found in " + stopeName + ". Check the ring selection.";
+    return;
+  }
+  preview.style.display = "block";
+  preview.style.background = "#dbeafe"; preview.style.color = "#1e3a8a";
+  var ringNames = result.rings.map(function(r){return r.name;}).join(", ");
+  preview.innerHTML = "<strong>" + ringNames + "</strong> &mdash; " + Math.round(result.totalTonnes).toLocaleString() + " t &bull; avg grade <strong>" + result.avgGrade + " g/t</strong>";
+}
+
+function doAdd() {
+  var selVal = document.getElementById("nN").value;
+  var nm, st, gr, setupName, ringsStr;
+
+  if (selVal === "__manual__") {
+    nm = document.getElementById("nNManual").value.trim();
+    st = parseFloat(document.getElementById("nS").value) || 0;
+    gr = parseFloat(document.getElementById("nG").value) || null;
+    setupName = null; ringsStr = null;
+    if (!nm) { alert("Enter a stope name."); return; }
+  } else if (selVal === "") {
+    alert("Select a stope from Setup, or choose Manual entry.");
+    return;
+  } else {
+    var fromVal = document.getElementById("nRingFrom").value;
+    var toVal = document.getElementById("nRingTo").value;
+    if (!fromVal) { alert("Select a ring (or ring range) to add."); return; }
+    ringsStr = (toVal && toVal !== fromVal) ? (fromVal + "-" + toVal) : fromVal;
+    var result = parseRingRange(selVal, ringsStr);
+    if (!result) { alert("Could not find those rings in " + selVal + ". Check the ring selection in Stope Setup."); return; }
+    nm = selVal + " (" + ringsStr.toUpperCase() + ")";
+    st = result.totalTonnes;
+    gr = result.avgGrade;
+    setupName = selVal;
+  }
+
+  for (var i = 0; i < ST.length; i++) { if (ST[i].n === nm) { alert("Already exists."); return; } }
+  ST.push({n: nm, s: st, g: gr, mode: "Manual", rate: RATE_MANUAL, setupName: setupName, ringsStr: ringsStr});
+  if (st > 0 && gr) { tog[nm] = true; }
+
+  // Reset form
+  document.getElementById("nN").value = "";
+  document.getElementById("nNManual").value = "";
+  resetRingDropdowns();
+  document.getElementById("nS").value = "";
+  document.getElementById("nG").value = "";
+  document.getElementById("nS_btn").textContent = "Tap to enter";
+  document.getElementById("nG_btn").textContent = "Tap to enter";
+  document.getElementById("nManualRow").style.display = "none";
+  document.getElementById("nRingPreview").style.display = "none";
+  addOpen = false;
+  document.getElementById("addForm").className = "addform";
+  markUnsaved();
+  drawStopes(ST.length - 1); // pass new row index for flash
+  checkSetupBanner();
+}
+
+
+// ─── Add development form ─────────────────────────────────────────
+function toggleDev() {
+  devOpen = !devOpen;
+  if (devOpen) { addOpen = false; document.getElementById("addForm").className = "addform"; }
+  document.getElementById("devForm").className = "devform" + (devOpen ? " open" : "");
+}
+
+function doAddDev() {
+  var nm = document.getElementById("dN").value.trim();
+  var cuts = parseInt(document.getElementById("dC").value) || 0;
+  var st = parseFloat(document.getElementById("dS").value) || (cuts * DEV_T_PER_CUT);
+  var gr = parseFloat(document.getElementById("dG").value) || DEV_DEFAULT_GRADE;
+  if (!nm) {
+    var base = "Dev Ore"; var candidate = base; var count = 1;
+    var taken = {};
+    for (var i = 0; i < DV.length; i++) { taken[DV[i].n] = true; }
+    while (taken[candidate]) { count++; candidate = base + " " + count; }
+    nm = candidate;
+  } else {
+    for (var i = 0; i < DV.length; i++) { if (DV[i].n === nm) { alert("Already exists."); return; } }
+  }
+  if (cuts <= 0 && st <= 0) { alert("Enter number of cuts or stock."); return; }
+  DV.push({n: nm, cuts: cuts, s: st, g: gr});
+  devtog[nm] = true;
+  document.getElementById("dN").value = "";
+  document.getElementById("dC").value = "";
+  document.getElementById("dS").value = "";
+  document.getElementById("dG").value = DEV_DEFAULT_GRADE;
+  devOpen = false;
+  document.getElementById("devForm").className = "devform";
+  markUnsaved();
+  drawDev(DV.length - 1);
+  checkSetupBanner();
+}
+
+// ─── Draw stope table ─────────────────────────────────────────────
+function drawStopes(newIdx) {
+  var tb = document.getElementById("stbody");
+  tb.innerHTML = "";
+  for (var i = 0; i < ST.length; i++) {
+    var x = ST[i];
+    var ok = has(x);
+    var on = ok && tog[x.n];
+    var m = ok ? smx(x) : 0;
+    var cap = caps[x.n] !== undefined ? caps[x.n] : m;
+    var rc = ok ? (on ? "active-row" : "inactive-row") : "nostock-row";
+    var tc = ok ? (on ? "ton" : "toff") : "tnone";
+    var tl = ok ? (on ? "ON" : "OFF") : "--";
+    var isEditing = (editingStope === i);
+
+    var tr = document.createElement("tr");
+    tr.className = rc + (i === newIdx ? " new-row-flash" : "");
+
+    // Name
+    var td1 = document.createElement("td");
+    td1.style.fontWeight = "bold"; td1.style.fontSize = "11px";
+    td1.textContent = x.n; td1.title = x.n;
+
+    // Mode
+    var tdMode = document.createElement("td");
+    if (isEditing) {
+      var modeEl = document.createElement("select");
+      modeEl.className = "cin editable"; modeEl.style.width = "80px";
+      modeEl.setAttribute("data-edit-mode", String(i));
+      var optR = document.createElement("option"); optR.value = "Remote"; optR.textContent = "Remote";
+      var optM = document.createElement("option"); optM.value = "Manual"; optM.textContent = "Manual";
+      if ((x.mode || "Manual") === "Remote") { optR.selected = true; } else { optM.selected = true; }
+      modeEl.appendChild(optR); modeEl.appendChild(optM);
+      tdMode.appendChild(modeEl);
+    } else {
+      var modeLbl = x.mode || "Manual";
+      var modeBadge = document.createElement("span");
+      modeBadge.style.cssText = "display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:bold;background:" +
+        (modeLbl === "Remote" ? "#dbeafe;color:#1e3a8a" : "#f3f4f6;color:#374151");
+      modeBadge.textContent = modeLbl;
+      tdMode.appendChild(modeBadge);
+    }
+
+    // Stock
+    var td2 = document.createElement("td");
+    if (isEditing) {
+      var inS = document.createElement("input");
+      inS.className = "cin editable"; inS.type = "number"; inS.min = "0";
+      inS.value = x.s || ""; inS.style.width = "70px";
+      inS.setAttribute("data-edit-s", String(i));
+      td2.appendChild(inS);
+    } else {
+      td2.style.fontSize = "11px";
+      var stockVal = x.s > 0 ? Math.round(x.s).toLocaleString() : "--";
+      var stockWrap = document.createElement("div");
+      stockWrap.style.cssText = "display:flex;align-items:center;gap:5px;";
+      var calcBtn = document.createElement("button");
+      calcBtn.style.cssText = "background:none;border:none;cursor:pointer;padding:0;font-size:11px;color:#1e3a8a;text-decoration:underline;text-underline-offset:2px;";
+      calcBtn.textContent = stockVal;
+      calcBtn.title = "Tap to change stock";
+      (function(si) {
+        calcBtn.addEventListener("click", function() {
+          openNumpad("Stock (t)", ST[si].n + " - enter new broken stock", ST[si].s || 0, function(v) {
+            ST[si].s = v;
+            if (ST[si].calcBase !== undefined) ST[si].calcBase = v;
+            ST[si].calcLog = [];
+            delete caps[ST[si].n];
+            markUnsaved();
+            drawStopes();
+          }, false);
+        });
+      })(i);
+      var histBtn = document.createElement("button");
+      histBtn.style.cssText = "background:#dbeafe;border:none;border-radius:4px;cursor:pointer;padding:1px 5px;font-size:9px;color:#1e3a8a;font-weight:bold;";
+      histBtn.textContent = "+Blast";
+      histBtn.title = "Add blast tonnes cumulatively";
+      histBtn.setAttribute("data-open-calc", String(i));
+      histBtn.setAttribute("data-calc-type", "stope");
+      stockWrap.appendChild(calcBtn);
+      stockWrap.appendChild(histBtn);
+      td2.appendChild(stockWrap);
+    }
+
+    // Grade
+    var td3 = document.createElement("td");
+    if (isEditing) {
+      var inG = document.createElement("input");
+      inG.className = "cin editable"; inG.type = "number"; inG.min = "0"; inG.step = "0.01";
+      inG.value = x.g || ""; inG.style.width = "60px";
+      inG.setAttribute("data-edit-g", String(i));
+      td3.appendChild(inG);
+    } else {
+      var gradeBtn = document.createElement("button");
+      gradeBtn.style.cssText = "background:none;border:none;cursor:pointer;padding:0;";
+      gradeBtn.innerHTML = gpill(x.g);
+      gradeBtn.title = "Tap to edit grade";
+      (function(idx2) {
+        gradeBtn.addEventListener("click", function() {
+          openNumpad("Grade", ST[idx2].n + " - enter grade (g/t)", ST[idx2].g, function(val) {
+            ST[idx2].g = val; markUnsaved(); drawStopes();
+          });
+        });
+      })(i);
+      td3.appendChild(gradeBtn);
+    }
+
+    // Rate cap
+    var tdRate = document.createElement("td");
+    if (isEditing) {
+      var inRate = document.createElement("input");
+      inRate.className = "cin editable"; inRate.type = "number"; inRate.min = "0";
+      inRate.value = x.rate || ((x.mode||"Manual")==="Remote" ? RATE_REMOTE : RATE_MANUAL);
+      inRate.style.width = "70px";
+      inRate.setAttribute("data-edit-rate", String(i));
+      tdRate.appendChild(inRate);
+    } else {
+      var rateBtn = document.createElement("button");
+      rateBtn.style.cssText = "background:none;border:none;cursor:pointer;padding:0;font-size:11px;color:#b45309;text-decoration:underline;text-underline-offset:2px;font-weight:bold;";
+      var rateVal = x.rate || ((x.mode||"Manual")==="Remote" ? RATE_REMOTE : RATE_MANUAL);
+      rateBtn.textContent = rateVal.toLocaleString() + " t";
+      rateBtn.title = "Tap to edit rate cap";
+      (function(idx2) {
+        rateBtn.addEventListener("click", function() {
+          var cur = ST[idx2].rate || ((ST[idx2].mode||"Manual")==="Remote" ? RATE_REMOTE : RATE_MANUAL);
+          openNumpad("Rate cap (t/day)", ST[idx2].n, cur, function(val) {
+            ST[idx2].rate = val; markUnsaved(); drawStopes();
+          });
+        });
+      })(i);
+      tdRate.appendChild(rateBtn);
+    }
+
+    // Rate Oz (ounces at this rate cap)
+    var tdRateOz = document.createElement("td");
+    tdRateOz.style.fontSize = "11px"; tdRateOz.style.fontWeight = "bold"; tdRateOz.style.color = "#0f6e56";
+    if (ok && x.g) {
+      var ozFvLive = +document.getElementById("ozF").value || 0.03215;
+      var rateForOz = x.rate || ((x.mode||"Manual")==="Remote" ? RATE_REMOTE : RATE_MANUAL);
+      var rateOz = Math.round(rateForOz * x.g * ozFvLive * 10) / 10;
+      tdRateOz.textContent = rateOz.toLocaleString() + " oz";
+    } else {
+      tdRateOz.textContent = "--";
+    }
+
+    // Max trucks
+    var td4 = document.createElement("td"); td4.style.fontSize = "11px";
+    td4.textContent = ok ? m : "--";
+
+    // Cap
+    var td5 = document.createElement("td");
+    var cinEl = document.createElement("input");
+    var rateMax = ok ? Math.floor((x.rate || ((x.mode||"Manual")==="Remote" ? RATE_REMOTE : RATE_MANUAL)) / TF) : m;
+    var capMax = Math.min(m, rateMax);
+    if (cap > capMax) { cap = capMax; caps[x.n] = cap; }
+    cinEl.className = "cin"; cinEl.type = "number"; cinEl.min = "0";
+    cinEl.max = String(capMax); cinEl.value = String(cap);
+    cinEl.setAttribute("inputmode","numeric");
+    cinEl.setAttribute("data-idx", String(i));
+    cinEl.title = "Max " + capMax + " trucks";
+    if (!ok || !on) { cinEl.disabled = true; }
+    td5.appendChild(cinEl);
+
+    // Toggle
+    var td6 = document.createElement("td");
+    var togEl = document.createElement("button");
+    togEl.className = "tbtn " + tc; togEl.textContent = tl;
+    togEl.setAttribute("data-tg", String(i));
+    td6.appendChild(togEl);
+
+    // Actions
+    var td7 = document.createElement("td");
+    var abts = document.createElement("div"); abts.className = "action-btns";
+    if (isEditing) {
+      var saveEl = document.createElement("button"); saveEl.className = "savebtn-inline"; saveEl.textContent = "✓";
+      saveEl.setAttribute("data-save-stope", String(i));
+      var cancelEl = document.createElement("button"); cancelEl.className = "editbtn"; cancelEl.textContent = "✕";
+      cancelEl.setAttribute("data-cancel-stope", "1");
+      abts.appendChild(saveEl); abts.appendChild(cancelEl);
+    } else {
+      var editEl = document.createElement("button"); editEl.className = "editbtn"; editEl.textContent = "✎";
+      editEl.setAttribute("data-edit-stope", String(i));
+      var delEl = document.createElement("button"); delEl.className = "delbtn"; delEl.textContent = "✕";
+      delEl.setAttribute("data-rm", String(i));
+      abts.appendChild(editEl); abts.appendChild(delEl);
+    }
+    td7.appendChild(abts);
+
+    tr.appendChild(td1); tr.appendChild(tdMode); tr.appendChild(td2); tr.appendChild(td3);
+    tr.appendChild(tdRate); tr.appendChild(tdRateOz); tr.appendChild(td4); tr.appendChild(td5); tr.appendChild(td6); tr.appendChild(td7);
+    tb.appendChild(tr);
+  }
+
+  // Total stock footer
+  var totalActive = 0;
+  var totalOzActive = 0;
+  var ozFvTot = +document.getElementById("ozF").value || 0.03215;
+  for (var i = 0; i < ST.length; i++) {
+    if (has(ST[i]) && tog[ST[i].n]) {
+      totalActive += ST[i].s || 0;
+      var rateForTot = ST[i].rate || ((ST[i].mode||"Manual")==="Remote" ? RATE_REMOTE : RATE_MANUAL);
+      totalOzActive += rateForTot * ST[i].g * ozFvTot;
+    }
+  }
+  var stTot = document.getElementById("stTotalStock");
+  if (stTot) { stTot.textContent = Math.round(totalActive).toLocaleString() + " t"; }
+  var stTotOz = document.getElementById("stTotalOz");
+  if (stTotOz) { stTotOz.textContent = (Math.round(totalOzActive * 10) / 10).toLocaleString() + " oz"; }
+  window._stTotalOzVal = totalOzActive;
+  updateGrandTotalOz();
+}
+
+// ─── Draw development table ───────────────────────────────────────
+function drawDev(newIdx) {
+  var tb = document.getElementById("devbody");
+  tb.innerHTML = "";
+  if (DV.length === 0) {
+    var tr = document.createElement("tr");
+    var td = document.createElement("td");
+    td.colSpan = 9; td.style.textAlign = "center"; td.style.color = "#aaa"; td.style.padding = "12px";
+    td.textContent = "No development headings added yet. Tap + Add Development above.";
+    tr.appendChild(td); tb.appendChild(tr);
+    return;
+  }
+  for (var i = 0; i < DV.length; i++) {
+    var x = DV[i];
+    var ok = x.s > 0 && x.g;
+    var on = ok && devtog[x.n];
+    var m = ok ? smx(x) : 0;
+    var cap = devcaps[x.n] !== undefined ? devcaps[x.n] : m;
+    var rc = ok ? (on ? "dev-active" : "inactive-row") : "nostock-row";
+    var tc = ok ? (on ? "ton" : "toff") : "tnone";
+    var tl = ok ? (on ? "ON" : "OFF") : "--";
+    var isEditing = (editingDev === i);
+
+    var tr = document.createElement("tr");
+    tr.className = rc + (i === newIdx ? " new-row-flash" : "");
+
+    var td1 = document.createElement("td"); td1.style.fontWeight = "bold"; td1.style.fontSize = "11px"; td1.textContent = x.n;
+
+    var td2 = document.createElement("td");
+    if (isEditing) {
+      var inC = document.createElement("input");
+      inC.className = "cin editable"; inC.type = "number"; inC.min = "1";
+      inC.value = x.cuts || ""; inC.style.width = "50px";
+      inC.setAttribute("data-dedit-c", String(i));
+      inC.addEventListener("input", function(e) {
+        var idx2 = e.target.getAttribute("data-dedit-c");
+        var sEl = document.querySelector("[data-dedit-s='" + idx2 + "']");
+        if (sEl) { sEl.value = (parseInt(e.target.value)||0) * DEV_T_PER_CUT; }
+      });
+      td2.appendChild(inC);
+    } else {
+      td2.style.fontSize = "11px"; td2.textContent = x.cuts || "--";
+    }
+
+    var td3 = document.createElement("td");
+    if (isEditing) {
+      var inS2 = document.createElement("input");
+      inS2.className = "cin editable"; inS2.type = "number"; inS2.min = "0";
+      inS2.value = x.s || ""; inS2.style.width = "65px";
+      inS2.setAttribute("data-dedit-s", String(i));
+      td3.appendChild(inS2);
+    } else {
+      td3.style.fontSize = "11px"; td3.textContent = x.s > 0 ? Math.round(x.s).toLocaleString() : "--";
+    }
+
+    var td4 = document.createElement("td");
+    if (isEditing) {
+      var inG2 = document.createElement("input");
+      inG2.className = "cin editable"; inG2.type = "number"; inG2.min = "0"; inG2.step = "0.01";
+      inG2.value = x.g || DEV_DEFAULT_GRADE; inG2.style.width = "55px";
+      inG2.setAttribute("data-dedit-g", String(i));
+      td4.appendChild(inG2);
+    } else { td4.innerHTML = gpill(x.g); }
+
+    // Rate Oz (ounces available from this heading's stock at full draw)
+    var tdDevOz = document.createElement("td");
+    tdDevOz.style.fontSize = "11px"; tdDevOz.style.fontWeight = "bold"; tdDevOz.style.color = "#c2410c";
+    if (ok) {
+      var ozFvLiveD = +document.getElementById("ozF").value || 0.03215;
+      var devOz = Math.round(x.s * x.g * ozFvLiveD * 10) / 10;
+      tdDevOz.textContent = devOz.toLocaleString() + " oz";
+    } else {
+      tdDevOz.textContent = "--";
+    }
+
+    var td5 = document.createElement("td"); td5.style.fontSize = "11px"; td5.textContent = ok ? m : "--";
+
+    var td6 = document.createElement("td");
+    var cinEl2 = document.createElement("input");
+    cinEl2.className = "cin"; cinEl2.type = "number"; cinEl2.min = "0";
+    cinEl2.max = String(m); cinEl2.value = String(cap);
+    cinEl2.setAttribute("inputmode","numeric");
+    cinEl2.setAttribute("data-didx", String(i));
+    if (!ok || !on) { cinEl2.disabled = true; }
+    td6.appendChild(cinEl2);
+
+    var td7 = document.createElement("td");
+    var togEl2 = document.createElement("button");
+    togEl2.className = "tbtn " + tc; togEl2.textContent = tl;
+    togEl2.setAttribute("data-dtg", String(i));
+    td7.appendChild(togEl2);
+
+    var td8 = document.createElement("td");
+    var abts2 = document.createElement("div"); abts2.className = "action-btns";
+    if (isEditing) {
+      var saveEl2 = document.createElement("button"); saveEl2.className = "savebtn-inline"; saveEl2.textContent = "✓";
+      saveEl2.setAttribute("data-save-dev", String(i));
+      var cancelEl2 = document.createElement("button"); cancelEl2.className = "editbtn"; cancelEl2.textContent = "✕";
+      cancelEl2.setAttribute("data-cancel-dev","1");
+      abts2.appendChild(saveEl2); abts2.appendChild(cancelEl2);
+    } else {
+      var editEl2 = document.createElement("button"); editEl2.className = "editbtn"; editEl2.textContent = "✎";
+      editEl2.setAttribute("data-edit-dev", String(i));
+      var delEl2 = document.createElement("button"); delEl2.className = "delbtn"; delEl2.textContent = "✕";
+      delEl2.setAttribute("data-drm", String(i));
+      abts2.appendChild(editEl2); abts2.appendChild(delEl2);
+    }
+    td8.appendChild(abts2);
+    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4);
+    tr.appendChild(tdDevOz); tr.appendChild(td5); tr.appendChild(td6); tr.appendChild(td7); tr.appendChild(td8);
+    tb.appendChild(tr);
+  }
+
+  // Dev total stock
+  var totalDev = 0;
+  var totalDevOz = 0;
+  var ozFvDevTot = +document.getElementById("ozF").value || 0.03215;
+  for (var i = 0; i < DV.length; i++) {
+    if (DV[i].s > 0 && DV[i].g && devtog[DV[i].n]) {
+      totalDev += DV[i].s || 0;
+      totalDevOz += DV[i].s * DV[i].g * ozFvDevTot;
+    }
+  }
+  var dvTot = document.getElementById("dvTotalStock");
+  if (dvTot) { dvTot.textContent = Math.round(totalDev).toLocaleString() + " t"; }
+  var dvTotOz = document.getElementById("dvTotalOz");
+  if (dvTotOz) { dvTotOz.textContent = (Math.round(totalDevOz * 10) / 10).toLocaleString() + " oz"; }
+  window._dvTotalOzVal = totalDevOz;
+  updateGrandTotalOz();
+}
+
+function updateGrandTotalOz() {
+  var grand = (window._stTotalOzVal || 0) + (window._dvTotalOzVal || 0);
+  var el = document.getElementById("grandTotalOz");
+  if (el) { el.textContent = (Math.round(grand * 10) / 10).toLocaleString() + " oz"; }
+}
+
+// ─── Table event delegation ───────────────────────────────────────
+document.getElementById("stbody").addEventListener("click", function(e) {
+  var tg    = e.target.getAttribute("data-tg");
+  var rm    = e.target.getAttribute("data-rm");
+  var edit  = e.target.getAttribute("data-edit-stope");
+  var save  = e.target.getAttribute("data-save-stope");
+  var cancel= e.target.getAttribute("data-cancel-stope");
+  var oc    = e.target.getAttribute("data-open-calc");
+
+  if (oc !== null) { openCalc(parseInt(oc), e.target.getAttribute("data-calc-type") || "stope"); return; }
+  if (tg !== null) {
+    var idx = parseInt(tg); var n = ST[idx].n;
+    if (tog[n]) { delete tog[n]; } else if (has(ST[idx])) { tog[n] = true; }
+    markUnsaved(); drawStopes();
+  }
+  if (rm !== null) {
+    var idx = parseInt(rm); var n = ST[idx].n;
+    if (!confirm("Remove " + n + "?")) return;
+    ST.splice(idx,1); delete tog[n]; delete caps[n];
+    if (editingStope === idx) { editingStope = -1; }
+    markUnsaved(); drawStopes(); checkSetupBanner();
+  }
+  if (edit !== null) { editingStope = parseInt(edit); drawStopes(); }
+  if (cancel !== null) { editingStope = -1; drawStopes(); }
+  if (save !== null) {
+    var idx = parseInt(save);
+    var newS = parseFloat(document.querySelector("[data-edit-s='" + idx + "']").value) || 0;
+    var newG = parseFloat(document.querySelector("[data-edit-g='" + idx + "']").value) || null;
+    var modeEl2 = document.querySelector("[data-edit-mode='" + idx + "']");
+    var newMode = modeEl2 ? modeEl2.value : (ST[idx].mode || "Manual");
+    var rateEl = document.querySelector("[data-edit-rate='" + idx + "']");
+    var newRate = rateEl ? (parseFloat(rateEl.value) || (newMode==="Remote"?RATE_REMOTE:RATE_MANUAL)) : (ST[idx].rate || (newMode==="Remote"?RATE_REMOTE:RATE_MANUAL));
+    ST[idx].s = newS; ST[idx].g = newG; ST[idx].mode = newMode; ST[idx].rate = newRate;
+    if (newS > 0 && newG) { tog[ST[idx].n] = true; } else { delete tog[ST[idx].n]; }
+    delete caps[ST[idx].n];
+    editingStope = -1; markUnsaved(); drawStopes();
+  }
+});
+
+document.getElementById("stbody").addEventListener("change", function(e) {
+  var idx = e.target.getAttribute("data-idx");
+  if (idx !== null) {
+    var i = parseInt(idx); var x = ST[i]; var m = smx(x);
+    var rateMax = Math.floor((x.rate || ((x.mode||"Manual")==="Remote" ? RATE_REMOTE : RATE_MANUAL)) / TF);
+    var capMax = Math.min(m, rateMax);
+    caps[x.n] = Math.max(0, Math.min(capMax, parseInt(e.target.value)||0));
+    if (parseInt(e.target.value) > capMax) {
+      e.target.value = caps[x.n];
+      alert("Truck cap cannot exceed " + capMax + " trucks.");
+    }
+    markUnsaved();
+  }
+});
+
+document.getElementById("devbody").addEventListener("click", function(e) {
+  var tg    = e.target.getAttribute("data-dtg");
+  var rm    = e.target.getAttribute("data-drm");
+  var edit  = e.target.getAttribute("data-edit-dev");
+  var save  = e.target.getAttribute("data-save-dev");
+  var cancel= e.target.getAttribute("data-cancel-dev");
+
+  if (tg !== null) {
+    var idx = parseInt(tg); var n = DV[idx].n;
+    if (devtog[n]) { delete devtog[n]; } else { devtog[n] = true; }
+    markUnsaved(); drawDev();
+  }
+  if (rm !== null) {
+    var idx = parseInt(rm); var n = DV[idx].n;
+    if (!confirm("Remove " + n + "?")) return;
+    DV.splice(idx,1); delete devtog[n]; delete devcaps[n];
+    if (editingDev === idx) { editingDev = -1; }
+    markUnsaved(); drawDev(); checkSetupBanner();
+  }
+  if (edit !== null) { editingDev = parseInt(edit); drawDev(); }
+  if (cancel !== null) { editingDev = -1; drawDev(); }
+  if (save !== null) {
+    var idx = parseInt(save);
+    var newC = parseInt(document.querySelector("[data-dedit-c='" + idx + "']").value) || 0;
+    var newS = parseFloat(document.querySelector("[data-dedit-s='" + idx + "']").value) || 0;
+    var newG = parseFloat(document.querySelector("[data-dedit-g='" + idx + "']").value) || DEV_DEFAULT_GRADE;
+    DV[idx].cuts = newC; DV[idx].s = newS; DV[idx].g = newG;
+    if (newS > 0 && newG) { devtog[DV[idx].n] = true; }
+    delete devcaps[DV[idx].n];
+    editingDev = -1; markUnsaved(); drawDev();
+  }
+});
+
+document.getElementById("devbody").addEventListener("change", function(e) {
+  var idx = e.target.getAttribute("data-didx");
+  if (idx !== null) {
+    var i = parseInt(idx); var x = DV[i]; var m = smx(x);
+    devcaps[x.n] = Math.max(0, Math.min(m, parseInt(e.target.value)||0));
+    markUnsaved();
+  }
+});
+
+// ─── Sliders & other listeners ────────────────────────────────────
+document.getElementById("tol").addEventListener("input", function() {
+  document.getElementById("tolOut").textContent = "+/-" + this.value + "%";
+  markUnsaved();
+});
+document.getElementById("extraTrucks").addEventListener("input", function() {
+  var v = +this.value;
+  document.getElementById("extraTrucksOut").textContent = v === 0 ? "0 tr" : "+" + v + " tr";
+  markUnsaved();
+});
+document.getElementById("addTogBtn").addEventListener("click", toggleAdd);
+document.getElementById("addDevTogBtn").addEventListener("click", toggleDev);
+document.getElementById("afSaveBtn").addEventListener("click", doAdd);
+document.getElementById("devSaveBtn").addEventListener("click", doAddDev);
+document.getElementById("runBtn").addEventListener("click", run);
+document.getElementById("expBtn").addEventListener("click", doExport);
+
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("calcBaseInput").addEventListener("input", function() { updateRunningTotal(); });
+});
+
+// ─── Optimizer ────────────────────────────────────────────────────
+function findCombos(ranges, lo, hi, dailyT, actList, ozFv) {
+  var results = [];
+  var n = ranges.length;
+  var idx = [];
+  for (var i = 0; i < n; i++) { idx.push(0); }
+  while (true) {
+    var tot = 0;
+    for (var i = 0; i < n; i++) { tot += ranges[i][idx[i]]; }
+    if (tot > 0) {
+      var totT = tot * TF;
+      if (totT >= dailyT * 0.85 && totT <= dailyT * 1.15) {
+        var oz = 0;
+        for (var i = 0; i < n; i++) { oz += ranges[i][idx[i]] * TF * actList[i].g * ozFv; }
+        oz = Math.round(oz * 10) / 10;
+        if (oz >= lo && oz <= hi) {
+          results.push({cb: idx.slice(), tot: tot, totT: totT, oz: oz});
+          if (results.length >= 50) { return results; }
+        }
+      }
+    }
+    var pos = n - 1;
+    while (pos >= 0) {
+      idx[pos]++;
+      if (idx[pos] < ranges[pos].length) { break; }
+      idx[pos] = 0; pos--;
+    }
+    if (pos < 0) { break; }
+  }
+  return results;
+}
+
+function run() {
+  var ozT  = +document.getElementById("ozT").value;
+  var d    = +document.getElementById("dp").value;
+  var ozFv = +document.getElementById("ozF").value;
+  var tl   = +document.getElementById("tol").value / 100;
+  var tt   = Math.floor(d / TF);
+
+  act = [];
+  for (var i = 0; i < ST.length; i++) {
+    if (tog[ST[i].n] && has(ST[i])) {
+      act.push({n: ST[i].n, s: ST[i].s, g: ST[i].g, mode: ST[i].mode || "Manual", type: "ore", capRef: caps});
+    }
+  }
+  for (var i = 0; i < DV.length; i++) {
+    if (devtog[DV[i].n] && DV[i].s > 0 && DV[i].g) {
+      act.push({n: DV[i].n, s: DV[i].s, g: DV[i].g, mode: "--", type: "dev", capRef: devcaps});
+    }
+  }
+
+  if (!act.length) {
+    document.getElementById("results").innerHTML = '<div class="stmsg">No active stopes or headings. Tap ON to activate.</div>';
+    return;
+  }
+
+  var btn = document.getElementById("runBtn");
+  btn.disabled = true; btn.textContent = "Searching...";
+
+  setTimeout(function() {
+    var lo = ozT * (1 - tl), hi = ozT * (1 + tl);
+    var ranges = [];
+    for (var i = 0; i < act.length; i++) {
+      var x = act[i];
+      var capStore = x.type === "ore" ? caps : devcaps;
+      var extraTr = +document.getElementById("extraTrucks").value;
+      var baseCap = capStore[x.n] !== undefined ? capStore[x.n] : smx(x);
+      var capV = Math.min(baseCap + extraTr, smx(x), tt);
+      var r = [];
+      for (var j = 0; j <= capV; j++) { r.push(j); }
+      ranges.push(r);
+    }
+
+    sols = findCombos(ranges, lo, hi, d, act, ozFv);
+    sols.sort(function(a, b) { return Math.abs(a.oz - ozT) - Math.abs(b.oz - ozT); });
+
+    btn.disabled = false; btn.innerHTML = "&#9654; Find Best 3";
+    document.getElementById("expBtn").disabled = false;
+    document.getElementById("saveOptBtn").disabled = false;
+
+    if (!sols.length) {
+      // Greedy suggestion
+      var n2 = act.length;
+      var order2 = [];
+      for (var i = 0; i < n2; i++) { order2.push(i); }
+      order2.sort(function(a, b) { return act[b].g - act[a].g; });
+      var bestCb = new Array(n2).fill(0);
+      var left2 = tt;
+      for (var si = 0; si < order2.length && left2 > 0; si++) {
+        var oi = order2[si];
+        var cap2 = ranges[oi].length - 1;
+        var asgn2 = Math.min(cap2, left2);
+        bestCb[oi] = asgn2; left2 -= asgn2;
+      }
+      var bestTot = 0, bestOz = 0;
+      for (var i = 0; i < n2; i++) { bestTot += bestCb[i]; bestOz += bestCb[i] * TF * act[i].g * ozFv; }
+      bestOz = Math.round(bestOz * 10) / 10;
+      var gap = Math.round((ozT - bestOz) * 10) / 10;
+      var pct = Math.round(bestOz / ozT * 100);
+
+      // Store for Save/CSV
+      lastBestResult = {
+        oz: bestOz, tot: bestTot, totT: bestTot * TF, reached: false,
+        rows: bestCb.map(function(tr, i) {
+          return tr > 0 ? {n: act[i].n, type: act[i].type, g: act[i].g, trucks: tr, tonnes: tr * TF, oz: Math.round(tr * TF * act[i].g * ozFv * 10) / 10} : null;
+        }).filter(Boolean)
+      };
+
+      var sugs = [];
+      sugs.push("Maximum achievable with current resources: <strong>" + bestOz + " oz</strong> (" + pct + "% of target, <strong>" + gap + " oz short</strong>).");
+      var stockFull = false;
+      for (var i = 0; i < n2; i++) { if (bestCb[i] > 0 && bestCb[i] >= smx(act[i])) { stockFull = true; } }
+      if (stockFull) { sugs.push("Some stopes are <strong>fully drawn</strong> &mdash; blast more rings to increase stock."); }
+      var inactiveWithStock = [];
+      for (var i = 0; i < ST.length; i++) { if (!tog[ST[i].n] && has(ST[i])) { inactiveWithStock.push(ST[i].n + " (" + ST[i].g + " g/t)"); } }
+      if (inactiveWithStock.length) { sugs.push("These stopes are <strong>OFF</strong> but have stock: <strong>" + inactiveWithStock.join(", ") + "</strong>"); }
+      sugs.push("Widen the <strong>tolerance slider</strong> or increase the <strong>extra trucks buffer</strong>.");
+
+      var mk2 = function(t) { return document.createElement(t); };
+      var res2 = document.getElementById("results");
+      res2.innerHTML = "";
+      var card = mk2("div");
+      card.style.cssText = "background:#fff;border-radius:13px;overflow:hidden;border:2px solid #f59e0b;margin-bottom:10px;";
+      var hdr = mk2("div");
+      hdr.style.cssText = "background:linear-gradient(135deg,#92400e,#b45309);padding:13px 14px;";
+      hdr.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><span style="font-size:10px;font-weight:bold;background:rgba(255,255,255,0.2);color:#fff;padding:3px 9px;border-radius:20px">Target not reached</span><span style="font-size:10px;color:rgba(255,255,255,0.6)">Best possible shown</span></div>' +
+        '<div style="font-size:28px;font-weight:bold;color:#fff;line-height:1">' + bestOz + '<span style="font-size:13px;font-weight:normal;color:rgba(255,255,255,0.7);margin-left:3px">oz</span></div>' +
+        '<div style="font-size:12px;color:#fde68a;margin-top:4px;font-weight:bold">-' + gap + ' oz short of ' + ozT + ' oz target (' + pct + '% achieved)</div>' +
+        '<div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:3px">' + bestTot + ' trucks &bull; ' + (bestTot * TF).toLocaleString() + ' t</div>';
+      var body = mk2("div"); body.style.cssText = "padding:12px 14px;";
+      for (var i = 0; i < n2; i++) {
+        if (!bestCb[i]) { continue; }
+        var x2 = act[i]; var t2 = bestCb[i] * TF;
+        var oz2 = Math.round(t2 * x2.g * ozFv * 10) / 10;
+        var pct2 = Math.round(oz2 / bestOz * 100);
+        var row2 = mk2("div");
+        row2.style.cssText = "display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid #f1f5f9;gap:4px;";
+        var badge2 = '<span style="display:inline-block;padding:1px 5px;border-radius:8px;font-size:8px;font-weight:bold;margin-left:4px;background:' + (x2.type==="dev"?"#fed7aa":"#d1fae5") + ';color:' + (x2.type==="dev"?"#9a3412":"#065f46") + '">' + (x2.type==="dev"?"DEV":"ORE") + '</span>';
+        row2.innerHTML = '<span style="font-size:11px;font-weight:bold;color:#111;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:50%">' + x2.n + badge2 + '</span><span style="font-size:11px;font-weight:bold;color:#b45309;white-space:nowrap">' + bestCb[i] + ' trucks</span><span style="font-size:11px;color:#888;white-space:nowrap">' + oz2 + ' oz</span>';
+        var bar2 = mk2("div"); bar2.style.cssText = "background:#e2e8f0;border-radius:3px;height:4px;margin-top:3px;overflow:hidden;";
+        bar2.innerHTML = '<div style="width:' + pct2 + '%;height:100%;border-radius:3px;background:#b45309"></div>';
+        body.appendChild(row2); body.appendChild(bar2);
+      }
+      var totRow2 = mk2("div");
+      totRow2.style.cssText = "display:flex;justify-content:space-between;padding:7px 0;font-weight:bold;font-size:12px;border-top:1px solid #e2e8f0;margin-top:4px;";
+      totRow2.innerHTML = '<span>Total</span><span style="color:#b45309">' + bestTot + ' trucks &bull; ' + (bestTot * TF).toLocaleString() + ' t &bull; ' + bestOz + ' oz</span>';
+      body.appendChild(totRow2);
+      var sugBox = mk2("div");
+      sugBox.style.cssText = "background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:12px;color:#92400e;line-height:1.7;";
+      sugBox.innerHTML = '<strong style="display:block;margin-bottom:6px;font-size:12px;color:#b45309">How to close the gap:</strong>' + sugs.map(function(s) { return '<div style="padding:3px 0 3px 10px;border-left:2px solid #f59e0b;margin-bottom:5px">' + s + '</div>'; }).join('');
+      body.appendChild(sugBox);
+      card.appendChild(hdr); card.appendChild(body); res2.appendChild(card);
+      showSaveToast("Target not reached — happy with the best possible? Save it.");
+      return;
+    }
+
+    var top3 = sols.slice(0, 3);
+    lastBestResult = null; // sols used directly
+    var rl   = ["Best Match", "Runner Up", "Third Best"];
+    var res  = document.getElementById("results");
+    res.innerHTML = "";
+
+    var t = document.createElement("div"); t.className = "stitle";
+    t.textContent = "Top 3 Combinations"; res.appendChild(t);
+
+    var b3 = document.createElement("div"); b3.className = "best3";
+    for (var i = 0; i < top3.length; i++) {
+      var s = top3[i];
+      var df = Math.round((s.oz - ozT) * 10) / 10;
+      var ds = (df >= 0 ? "+" : "") + df;
+      var card = document.createElement("div"); card.className = "b3card";
+      var hdr = document.createElement("div"); hdr.className = "b3h" + i;
+      hdr.innerHTML = '<div class="b3rank">' + rl[i] + '</div><div class="b3oz">' + s.oz + '<span class="b3ozs">oz</span></div><span class="b3diff">' + ds + ' oz</span><div class="b3meta">' + s.tot + ' trucks &bull; ' + s.totT.toLocaleString() + ' t</div>';
+      var body = document.createElement("div"); body.className = "b3body";
+      for (var j = 0; j < s.cb.length; j++) {
+        if (!s.cb[j]) { continue; }
+        var x = act[j]; var t2 = s.cb[j] * TF;
+        var oz2 = Math.round(t2 * x.g * ozFv * 10) / 10;
+        var pct = Math.round(oz2 / s.oz * 100);
+        var row = document.createElement("div"); row.className = "b3stope";
+        var typeBadge = '<span class="b3type ' + (x.type==="dev"?"dev":"ore") + '">' + (x.type==="dev"?"DEV":"ORE") + '</span>';
+        row.innerHTML = '<span class="b3sn">' + x.n + typeBadge + '</span><span class="b3tr">' + s.cb[j] + ' tr</span><span class="b3o">' + oz2 + ' oz</span>';
+        var bar = document.createElement("div"); bar.className = "bbar";
+        bar.innerHTML = '<div class="bfill" style="width:' + pct + '%;background:' + BF[i] + '"></div>';
+        body.appendChild(row); body.appendChild(bar);
+      }
+      card.appendChild(hdr); card.appendChild(body); b3.appendChild(card);
+    }
+    res.appendChild(b3);
+    showSaveToast("Happy with a result? Tap Save to keep it.");
+
+    if (sols.length > 3) {
+      var dv = document.createElement("div"); dv.className = "divd"; res.appendChild(dv);
+      var at = document.createElement("div"); at.className = "stitle";
+      at.textContent = "All " + sols.length + " Valid Options (sorted by accuracy)"; res.appendChild(at);
+      for (var i = 0; i < sols.length; i++) {
+        var s = sols[i];
+        var df = Math.round((s.oz - ozT) * 10) / 10;
+        var ds = (df >= 0 ? "+" : "") + df;
+        var dc = Math.abs(df) < ozT * 0.01 ? "odiff-ok" : "odiff-hi";
+        var bc = BC[i % BC.length];
+        var oc = document.createElement("div"); oc.className = "optcard";
+        var oh = document.createElement("div"); oh.className = "opth oc" + (i % 8);
+        oh.innerHTML = '<span class="onum">Option ' + (i+1) + '</span><div class="ostats"><span class="ost"><strong>' + s.oz + ' oz</strong></span><span class="ost"><strong>' + s.totT.toLocaleString() + ' t</strong></span><span class="ost"><strong>' + s.tot + ' trucks</strong></span></div><span class="' + dc + '">' + ds + ' oz</span>';
+        var sw2 = document.createElement("div"); sw2.style.overflowX = "auto"; sw2.style.WebkitOverflowScrolling = "touch";
+        var tbl = document.createElement("table"); tbl.className = "otbl";
+        tbl.innerHTML = '<thead><tr><th>Source</th><th>Type</th><th>Mode</th><th>Grade</th><th>Trucks</th><th>Tonnes</th><th>Oz</th><th>Stock Left</th></tr></thead>';
+        var tbody2 = document.createElement("tbody");
+        for (var j = 0; j < s.cb.length; j++) {
+          if (!s.cb[j]) { continue; }
+          var x = act[j]; var tn = s.cb[j] * TF;
+          var oz2 = Math.round(tn * x.g * ozFv * 10) / 10;
+          var pct = Math.round(oz2 / s.oz * 100);
+          var rem = Math.round((x.s - tn) * 10) / 10;
+          var rc2 = rem < 0 ? "rc" : rem < 100 ? "rw" : "";
+          var typeLbl = x.type==="dev"?'<span class="type-badge type-dev">DEV</span>':'<span class="type-badge type-ore">ORE</span>';
+          var modeLbl2 = (x.mode||"Manual")==="Remote"?'<span style="display:inline-block;padding:1px 6px;border-radius:10px;font-size:9px;font-weight:bold;background:#dbeafe;color:#1e3a8a">Remote</span>':'<span style="display:inline-block;padding:1px 6px;border-radius:10px;font-size:9px;font-weight:bold;background:#f3f4f6;color:#374151">Manual</span>';
+          var tr2 = document.createElement("tr");
+          tr2.innerHTML = '<td><strong>' + x.n + '</strong></td><td>' + typeLbl + '</td><td>' + modeLbl2 + '</td><td>' + gpill(x.g) + '</td><td>' + s.cb[j] + '</td><td>' + tn.toLocaleString() + '</td><td>' + oz2 + 'oz<span class="obar" style="width:' + Math.round(pct*.5) + 'px;background:' + bc + '"></span></td><td class="' + rc2 + '">' + rem + 't</td>';
+          tbody2.appendChild(tr2);
+        }
+        var tr3 = document.createElement("tr"); tr3.className = "tot";
+        tr3.innerHTML = '<td colspan="4">Total</td><td>' + s.tot + '</td><td>' + s.totT.toLocaleString() + '</td><td>' + s.oz + ' oz</td><td>--</td>';
+        tbody2.appendChild(tr3);
+        tbl.appendChild(tbody2); sw2.appendChild(tbl); oc.appendChild(oh); oc.appendChild(sw2);
+        res.appendChild(oc);
+      }
+    }
+  }, 30);
+}
+
+// ─── Export CSV ───────────────────────────────────────────────────
+function doExport() {
+  if (!sols.length && !lastBestResult) { return; }
+  var ozT  = +document.getElementById("ozT").value;
+  var d    = +document.getElementById("dp").value;
+  var ozFv = +document.getElementById("ozF").value;
+  var lines = ["OUNCES OPTIMIZER RESULTS - UMA Obuasi"];
+  lines.push("Date," + new Date().toLocaleDateString());
+  lines.push("Ounces Target," + ozT + " oz");
+  lines.push("Plan Tonnes," + d + " t");
+  lines.push("Ounces Factor," + ozFv);
+  lines.push("");
+  if (sols.length) {
+    var rl = ["BEST MATCH","RUNNER UP","THIRD BEST"];
+    var top3 = sols.slice(0, 3);
+    for (var i = 0; i < top3.length; i++) {
+      var s = top3[i];
+      var df = Math.round((s.oz - ozT) * 10) / 10;
+      lines.push(rl[i]);
+      lines.push("Total Oz," + s.oz + ",vs target," + (df>=0?"+":"") + df);
+      lines.push("Trucks," + s.tot + ",Tonnes," + s.totT);
+      lines.push("Source,Type,Grade,Trucks,Tonnes,Oz Contribution,Stock Left");
+      for (var j = 0; j < s.cb.length; j++) {
+        if (!s.cb[j]) { continue; }
+        var x = act[j]; var tn = s.cb[j] * TF;
+        var oz2 = Math.round(tn * x.g * ozFv * 10) / 10;
+        var rem = Math.round((x.s - tn) * 10) / 10;
+        lines.push(x.n + "," + x.type.toUpperCase() + "," + x.g + "," + s.cb[j] + "," + tn + "," + oz2 + "," + rem);
+      }
+      lines.push("");
+    }
+  } else {
+    var br = lastBestResult;
+    var gap = Math.round((ozT - br.oz) * 10) / 10;
+    lines.push("BEST POSSIBLE (TARGET NOT REACHED)");
+    lines.push("Total Oz," + br.oz + ",short of target," + gap + " oz");
+    lines.push("Trucks," + br.tot + ",Tonnes," + br.totT);
+    lines.push("Source,Type,Grade,Trucks,Tonnes,Oz Contribution");
+    br.rows.forEach(function(r) {
+      lines.push(r.n + "," + r.type.toUpperCase() + "," + r.g + "," + r.trucks + "," + r.tonnes + "," + r.oz);
+    });
+    lines.push("");
+  }
+  var blob = new Blob([lines.join("\n")], {type:"text/csv"});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url; a.download = "ounces_results_" + new Date().toISOString().slice(0,10) + ".csv";
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+// ─── Stope Setup Tab ───────────────────────────────────────────────
+function drawStopeSetup() {
+  var el = document.getElementById("ssStopeList");
+  if (!STOPE_SETUP.length) {
+    el.innerHTML = '<div class="no-past">No stopes set up yet. Tap + Add Stope to begin.</div>';
+    return;
+  }
+  el.innerHTML = "";
+  STOPE_SETUP.forEach(function(st, idx) {
+    var totalT = st.rings.reduce(function(a,r){return a+r.tonnes;}, 0);
+    var avgG = totalT > 0 ? st.rings.reduce(function(a,r){return a+r.tonnes*r.grade;},0) / totalT : 0;
+    var card = document.createElement("div"); card.className = "past-opt-card";
+    var hdr = document.createElement("div"); hdr.className = "past-opt-hdr";
+    hdr.innerHTML = '<span>' + st.name + '</span><small>' + st.rings.length + ' ring' + (st.rings.length===1?"":"s") + ' &bull; ' + Math.round(totalT).toLocaleString() + ' t &bull; avg ' + (Math.round(avgG*100)/100) + ' g/t</small>';
+    var body = document.createElement("div"); body.className = "past-opt-body";
+    var tbl = document.createElement("table"); tbl.className = "otbl"; tbl.style.minWidth = "0";
+    tbl.innerHTML = '<thead><tr><th>Ring</th><th>Grade</th><th>Tonnes</th></tr></thead>';
+    var tb = document.createElement("tbody");
+    st.rings.forEach(function(r) {
+      var tr = document.createElement("tr");
+      tr.innerHTML = '<td><strong>' + r.name + '</strong></td><td>' + r.grade + ' g/t</td><td>' + Math.round(r.tonnes).toLocaleString() + ' t</td>';
+      tb.appendChild(tr);
+    });
+    var trTot = document.createElement("tr"); trTot.className = "tot";
+    trTot.innerHTML = '<td>Total</td><td>avg ' + (Math.round(avgG*100)/100) + ' g/t</td><td>' + Math.round(totalT).toLocaleString() + ' t</td>';
+    tb.appendChild(trTot);
+    tbl.appendChild(tb); body.appendChild(tbl);
+    var btns = document.createElement("div"); btns.style.cssText = "display:flex;gap:6px;margin-top:8px";
+    var editBtn = document.createElement("button"); editBtn.className = "past-opt-pdf"; editBtn.textContent = "Edit Rings";
+    editBtn.onclick = (function(i){ return function(){ ssOpenEditStope(i); }; })(idx);
+    var delBtn = document.createElement("button"); delBtn.className = "past-opt-del"; delBtn.textContent = "Delete Stope";
+    delBtn.onclick = (function(i){ return function(){ ssDeleteStope(i); }; })(idx);
+    btns.appendChild(editBtn); btns.appendChild(delBtn);
+    body.appendChild(btns);
+    card.appendChild(hdr); card.appendChild(body);
+    el.appendChild(card);
+  });
+}
+
+function ssOpenNewStope() {
+  var nm = prompt("Enter new stope name (e.g. 3400_280_RDN):");
+  if (!nm) return;
+  nm = nm.trim();
+  if (!nm) return;
+  for (var i = 0; i < STOPE_SETUP.length; i++) {
+    if (STOPE_SETUP[i].name === nm) { alert("A stope with this name already exists. Use Edit Rings instead."); return; }
+  }
+  ssEditingStopeIdx = STOPE_SETUP.length;
+  STOPE_SETUP.push({ name: nm, rings: [] });
+  ssCurrentRings = [];
+  document.getElementById("ssRingTitle").textContent = nm;
+  document.getElementById("ssRingSub").textContent = "Add rings with their grade and tonnes";
+  renderSsRingTable();
+  document.getElementById("ssRingOverlay").className = "calc-overlay open";
+}
+
+function ssOpenEditStope(idx) {
+  ssEditingStopeIdx = idx;
+  ssCurrentRings = STOPE_SETUP[idx].rings.slice();
+  document.getElementById("ssRingTitle").textContent = STOPE_SETUP[idx].name;
+  document.getElementById("ssRingSub").textContent = "Edit rings, grade, and tonnes";
+  renderSsRingTable();
+  document.getElementById("ssRingOverlay").className = "calc-overlay open";
+}
+
+function ssAddRing() {
+  var nm = document.getElementById("ssRingName").value.trim();
+  var gr = parseFloat(document.getElementById("ssRingGrade").value) || 0;
+  var tn = parseFloat(document.getElementById("ssRingTonnes").value) || 0;
+  if (!nm) { alert("Enter a ring name."); return; }
+  if (gr <= 0) { alert("Enter a grade."); return; }
+  if (tn <= 0) { alert("Enter tonnes."); return; }
+  for (var i = 0; i < ssCurrentRings.length; i++) {
+    if (ssCurrentRings[i].name === nm) { alert("Ring " + nm + " already added."); return; }
+  }
+  ssCurrentRings.push({ id: "r" + Date.now() + Math.floor(Math.random()*1000), name: nm, grade: gr, tonnes: tn });
+  document.getElementById("ssRingName").value = "";
+  document.getElementById("ssRingGrade").value = "";
+  document.getElementById("ssRingTonnes").value = "";
+  document.getElementById("ssRingGrade_btn").textContent = "Tap to enter";
+  document.getElementById("ssRingTonnes_btn").textContent = "Tap to enter";
+  renderSsRingTable();
+}
+
+function renderSsRingTable() {
+  var tb = document.getElementById("ssRingBody");
+  tb.innerHTML = "";
+  var total = 0;
+  ssCurrentRings.forEach(function(r, i) {
+    total += r.tonnes;
+    var tr = document.createElement("tr");
+    var td1 = document.createElement("td"); td1.style.fontWeight = "bold"; td1.style.fontSize = "11px"; td1.textContent = r.name;
+    var td2 = document.createElement("td"); td2.innerHTML = gpill(r.grade);
+    var td3 = document.createElement("td"); td3.style.fontSize = "11px"; td3.textContent = Math.round(r.tonnes).toLocaleString() + " t";
+    var td4 = document.createElement("td");
+    var delBtn = document.createElement("button"); delBtn.className = "delbtn"; delBtn.textContent = "✕";
+    delBtn.onclick = (function(idx){ return function(){ ssCurrentRings.splice(idx,1); renderSsRingTable(); }; })(i);
+    td4.appendChild(delBtn);
+    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4);
+    tb.appendChild(tr);
+  });
+  document.getElementById("ssRingTotalTonnes").textContent = Math.round(total).toLocaleString() + " t";
+}
+
+function ssSaveStope() {
+  if (ssEditingStopeIdx < 0) return;
+  if (!ssCurrentRings.length) { alert("Add at least one ring before saving."); return; }
+  STOPE_SETUP[ssEditingStopeIdx].rings = ssCurrentRings.slice();
+  markUnsaved();
+  ssCloseRingPopup();
+  drawStopeSetup();
+}
+
+function ssCloseRingPopup() {
+  // If a brand new stope was added but never saved with rings, remove it
+  if (ssEditingStopeIdx >= 0 && STOPE_SETUP[ssEditingStopeIdx] && STOPE_SETUP[ssEditingStopeIdx].rings.length === 0) {
+    STOPE_SETUP.splice(ssEditingStopeIdx, 1);
+  }
+  document.getElementById("ssRingOverlay").className = "calc-overlay";
+  ssEditingStopeIdx = -1; ssCurrentRings = [];
+  drawStopeSetup();
+}
+
+function ssDeleteStope(idx) {
+  if (!confirm("Delete stope " + STOPE_SETUP[idx].name + " and all its ring data?")) return;
+  STOPE_SETUP.splice(idx, 1);
+  markUnsaved();
+  drawStopeSetup();
+}
+
+// ─── Destinations Tab ──────────────────────────────────────────────
+var REASON_OPTIONS = ["", "Changing material", "Maintenance", "Breakdown", "Full"];
+
+function drawDestinations() {
+  drawTipCard("destKRS", ["krs_tip6", "krs_tip7"]);
+  drawTipCard("destKMS", ["kms"]);
+  drawSurfaceCard("destSurface", ["ore_pad", "waste_dump"]);
+}
+
+function drawTipCard(containerId, keys) {
+  var el = document.getElementById(containerId);
+  el.innerHTML = "";
+  keys.forEach(function(key) {
+    var d = DESTINATIONS[key];
+    var wrap = document.createElement("div");
+    wrap.style.cssText = "border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;margin-bottom:10px;background:" + (d.available ? "#f0fdf4" : "#fef2f2");
+    var top = document.createElement("div");
+    top.style.cssText = "display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px";
+    var nameWrap = document.createElement("div");
+    var nameLine = document.createElement("div");
+    nameLine.style.cssText = "font-size:13px;font-weight:bold;color:#111";
+    nameLine.textContent = d.name;
+    nameWrap.appendChild(nameLine);
+    var capBtn = document.createElement("div");
+    capBtn.style.cssText = "font-size:10px;color:#1e3a8a;font-weight:bold;cursor:pointer;-webkit-appearance:none;touch-action:manipulation;padding:2px 0";
+    capBtn.textContent = "Capacity: " + (d.capacity!==null && d.capacity!==undefined && d.capacity>0 ? d.capacity.toLocaleString()+' t' : '--') + " (tap to edit)";
+    capBtn.onclick = (function(k){ return function(){
+      openNumpad('Tip capacity', DESTINATIONS[k].name + ' - max tonnage', DESTINATIONS[k].capacity || 0, function(v) {
+        DESTINATIONS[k].capacity = Math.max(0, Math.round(v));
+        markUnsaved();
+        drawDestinations();
+      }, false);
+    }; })(key);
+    nameWrap.appendChild(capBtn);
+    top.appendChild(nameWrap);
+    var togBtn = document.createElement("button");
+    togBtn.className = "tbtn " + (d.available ? "ton" : "toff");
+    togBtn.textContent = d.available ? "AVAILABLE" : "UNAVAILABLE";
+    togBtn.style.minHeight = "36px";
+    togBtn.onclick = (function(k){ return function(){ toggleDestination(k); }; })(key);
+    top.appendChild(togBtn);
+    wrap.appendChild(top);
+
+    var matRow = document.createElement("div");
+    matRow.style.cssText = "display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:11px;color:#555";
+    var matSel = document.createElement("select");
+    matSel.className = "cin"; matSel.style.width = "100px";
+    ["ore","waste"].forEach(function(m) {
+      var o = document.createElement("option"); o.value = m; o.textContent = m.charAt(0).toUpperCase()+m.slice(1);
+      if (d.material === m) o.selected = true;
+      matSel.appendChild(o);
+    });
+    matSel.onchange = (function(k){ return function(e){ DESTINATIONS[k].material = e.target.value; markUnsaved(); }; })(key);
+    matRow.innerHTML = '<span>Currently handling:</span>';
+    matRow.appendChild(matSel);
+    wrap.appendChild(matRow);
+
+    if (!d.available) {
+      var reasonRow = document.createElement("div");
+      reasonRow.style.cssText = "font-size:11px;color:#555";
+      var reasonSel = document.createElement("select");
+      reasonSel.className = "cin"; reasonSel.style.width = "150px";
+      REASON_OPTIONS.forEach(function(r) {
+        var o = document.createElement("option"); o.value = r; o.textContent = r || "Select reason...";
+        if (d.reason === r) o.selected = true;
+        reasonSel.appendChild(o);
+      });
+      reasonSel.onchange = (function(k){ return function(e){ DESTINATIONS[k].reason = e.target.value; markUnsaved(); }; })(key);
+      reasonRow.innerHTML = '<span>Reason unavailable: </span>';
+      reasonRow.appendChild(reasonSel);
+      wrap.appendChild(reasonRow);
+    }
+    el.appendChild(wrap);
+  });
+}
+
+function drawSurfaceCard(containerId, keys) {
+  var el = document.getElementById(containerId);
+  el.innerHTML = "";
+  keys.forEach(function(key) {
+    var d = DESTINATIONS[key];
+    var wrap = document.createElement("div");
+    wrap.style.cssText = "border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;margin-bottom:10px;background:" + (d.available ? "#f0fdf4" : "#fef2f2");
+    var top = document.createElement("div");
+    top.style.cssText = "display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px";
+    top.innerHTML = '<div style="font-size:13px;font-weight:bold;color:#111">' + d.name + '</div>';
+    var togBtn = document.createElement("button");
+    togBtn.className = "tbtn " + (d.available ? "ton" : "toff");
+    togBtn.textContent = d.available ? "AVAILABLE" : "UNAVAILABLE";
+    togBtn.style.minHeight = "36px";
+    togBtn.onclick = (function(k){ return function(){ toggleDestination(k); }; })(key);
+    top.appendChild(togBtn);
+    wrap.appendChild(top);
+    if (!d.available) {
+      var reasonRow = document.createElement("div");
+      reasonRow.style.cssText = "font-size:11px;color:#555;margin-top:8px";
+      var reasonSel = document.createElement("select");
+      reasonSel.className = "cin"; reasonSel.style.width = "150px";
+      REASON_OPTIONS.forEach(function(r) {
+        var o = document.createElement("option"); o.value = r; o.textContent = r || "Select reason...";
+        if (d.reason === r) o.selected = true;
+        reasonSel.appendChild(o);
+      });
+      reasonSel.onchange = (function(k){ return function(e){ DESTINATIONS[k].reason = e.target.value; markUnsaved(); }; })(key);
+      reasonRow.innerHTML = '<span>Reason unavailable: </span>';
+      reasonRow.appendChild(reasonSel);
+      wrap.appendChild(reasonRow);
+    }
+    el.appendChild(wrap);
+  });
+}
+
+function toggleDestination(key) {
+  DESTINATIONS[key].available = !DESTINATIONS[key].available;
+  if (DESTINATIONS[key].available) { DESTINATIONS[key].reason = ""; }
+  markUnsaved();
+  drawDestinations();
+}
+
+// ─── Haulage Capacity Calculator ──────────────────────────────────
+function populateHaulageLevelDropdown() {
+  var sel = document.getElementById("hcLevel");
+  if (sel.options.length) return; // already populated
+  LEVEL_CYCLE_DATA.forEach(function(lvl) {
+    var o = document.createElement("option");
+    o.value = lvl.level; o.textContent = lvl.level + "L";
+    sel.appendChild(o);
+  });
+  updateHaulageCalc();
+}
+
+function updateHaulageCalc() {
+  var lvl = document.getElementById("hcLevel").value;
+  var destKey = document.getElementById("hcDest").value;
+  var cycle = getLevelCycle(lvl);
+  var el = document.getElementById("hcResult");
+  if (!cycle) { el.innerHTML = ""; return; }
+  var hrs = cycle[destKey];
+  if (hrs === null || hrs === undefined) {
+    el.innerHTML = '<div style="background:#fee2e2;border-radius:8px;padding:10px 12px;font-size:12px;color:#dc2626;font-weight:bold">No movement recorded yet from ' + lvl + 'L to this destination &mdash; cycle time unavailable.</div>';
+    return;
+  }
+  var trucks = maxTrucksPerDay(hrs);
+  var tonnes = trucks * TF;
+  el.innerHTML = '<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 14px">' +
+    '<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;color:#555">Cycle time</span><span style="font-size:13px;font-weight:bold;color:#111">' + hrs + ' hrs</span></div>' +
+    '<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;color:#555">Working day</span><span style="font-size:13px;font-weight:bold;color:#111">' + WORKING_HOURS_PER_DAY + ' hrs (2 x ' + SHIFT_HOURS + 'hr shifts)</span></div>' +
+    '<div style="display:flex;justify-content:space-between;border-top:1px solid #bbf7d0;padding-top:6px;margin-top:4px"><span style="font-size:12px;font-weight:bold;color:#065f46">Max trucks/day this route</span><span style="font-size:18px;font-weight:bold;color:#0f6e56">' + trucks + '</span></div>' +
+    '<div style="display:flex;justify-content:space-between"><span style="font-size:11px;color:#555">Max tonnes/day</span><span style="font-size:13px;font-weight:bold;color:#111">' + tonnes.toLocaleString() + ' t</span></div>' +
+    '</div>';
+}
+
+// ─── Stock calculator ─────────────────────────────────────────────
+function openCalc(idx, type) {
+  calcTargetIdx = idx;
+  calcTargetType = type || "stope";
+  var x = calcTargetType === "stope" ? ST[idx] : DV[idx];
+  calcEntries = (x.calcLog || []).slice();
+  document.getElementById("calcStopeName").textContent = x.n;
+  var base = x.calcBase !== undefined ? x.calcBase : (x.s || 0);
+  document.getElementById("calcBaseInput").value = Math.round(base);
+  var baseBtn = document.getElementById("calcBaseBtn");
+  if (baseBtn) baseBtn.textContent = Math.round(base).toLocaleString() + " t";
+  document.getElementById("calcAddT").value = "";
+  document.getElementById("calcAddNote").value = "";
+  renderCalcLog();
+  updateRunningTotal();
+  document.getElementById("calcOverlay").className = "calc-overlay open";
+}
+
+function updateRunningTotal() {
+  var base = parseFloat(document.getElementById("calcBaseInput").value) || 0;
+  var added = calcEntries.reduce(function(a,b){return a+b.t;},0);
+  document.getElementById("calcRunningTotal").textContent = Math.round(base + added).toLocaleString() + " t";
+}
+
+function renderCalcLog() {
+  var el = document.getElementById("calcLog");
+  if (!calcEntries.length) { el.innerHTML = '<div class="calc-log-empty">No additions yet</div>'; return; }
+  el.innerHTML = "";
+  for (var i = 0; i < calcEntries.length; i++) {
+    var e2 = calcEntries[i];
+    var row = document.createElement("div"); row.className = "calc-log-row";
+    var delBtn = document.createElement("button"); delBtn.className = "log-del"; delBtn.textContent = "✕";
+    delBtn.setAttribute("data-log-del", String(i));
+    row.innerHTML = '<span class="log-tonnes">+' + Math.round(e2.t).toLocaleString() + ' t</span><span style="color:#111;font-size:11px">' + (e2.note || "") + '</span><span class="log-who">' + (e2.who || "") + '</span>';
+    row.appendChild(delBtn);
+    el.appendChild(row);
+  }
+  el.addEventListener("click", function(ev) {
+    var d = ev.target.getAttribute("data-log-del");
+    if (d !== null) { calcEntries.splice(parseInt(d),1); renderCalcLog(); updateRunningTotal(); }
+  });
+}
+
+function calcAddEntry() {
+  var t = parseFloat(document.getElementById("calcAddT").value) || 0;
+  if (t <= 0) { alert("Enter tonnes to add."); return; }
+  var note = document.getElementById("calcAddNote").value.trim();
+  calcEntries.push({t: t, note: note, who: CURRENT_USER, time: new Date().toLocaleString()});
+  document.getElementById("calcAddT").value = "";
+  document.getElementById("calcAddNote").value = "";
+  document.getElementById("calcAddTBtn").textContent = "Tap to enter";
+  renderCalcLog();
+  updateRunningTotal();
+}
+
+function saveCalc() {
+  var x = calcTargetType === "stope" ? ST[calcTargetIdx] : DV[calcTargetIdx];
+  var base = parseFloat(document.getElementById("calcBaseInput").value) || 0;
+  x.calcBase = base;
+  x.s = base + calcEntries.reduce(function(a,b){return a+b.t;},0);
+  x.calcLog = calcEntries.slice();
+  delete caps[x.n];
+  closeCalc();
+  markUnsaved();
+  if (calcTargetType === "stope") drawStopes(); else drawDev();
+}
+
+function closeCalc() {
+  document.getElementById("calcOverlay").className = "calc-overlay";
+  calcTargetIdx = -1; calcEntries = [];
+}
+
+// ─── Past optimizations ───────────────────────────────────────────
+function savePastOpt() {
+  var ozT = +document.getElementById("ozT").value;
+  var d   = +document.getElementById("dp").value;
+  var ozFv= +document.getElementById("ozF").value;
+  if (!sols.length && !lastBestResult) { alert("Run the optimizer first."); return; }
+
+  var results;
+  var reached;
+  if (sols.length) {
+    reached = true;
+    results = sols.slice(0,3).map(function(s) {
+      return {oz: s.oz, tot: s.tot, totT: s.totT, reached: true,
+        rows: s.cb.map(function(tr,i){ return tr>0?{n:act[i].n,type:act[i].type,g:act[i].g,trucks:tr,tonnes:tr*TF,oz:Math.round(tr*TF*act[i].g*ozFv*10)/10}:null;}).filter(Boolean)};
+    });
+  } else {
+    reached = false;
+    results = [lastBestResult];
+  }
+
+  var record = {
+    id: Date.now(), by: CURRENT_USER, time: new Date().toLocaleString(),
+    ozTarget: ozT, planT: d, ozFactor: ozFv, reached: reached,
+    results: results
+  };
+  var all = getPastOpts();
+  all.unshift(record);
+  localStorage.setItem("oz_past_opts", JSON.stringify(all.slice(0, 50)));
+  alert("Optimization saved to Past Runs.");
+}
+
+function getPastOpts() {
+  try { return JSON.parse(localStorage.getItem("oz_past_opts") || "[]"); } catch(e) { return []; }
+}
+
+function renderPast() {
+  var all = getPastOpts();
+  var list = document.getElementById("pastList");
+  if (!all.length) { list.innerHTML = '<div class="no-past">No saved optimizations yet.</div>'; return; }
+  list.innerHTML = "";
+  var rl = ["Best Match","Runner Up","Third Best"];
+  var hc = ["#b45309","#0f6e56","#4c1d95"];
+  all.forEach(function(rec) {
+    var card = document.createElement("div"); card.className = "past-opt-card";
+    var hdr = document.createElement("div"); hdr.className = "past-opt-hdr";
+    hdr.innerHTML = '<span>Target: ' + rec.ozTarget + ' oz &bull; ' + rec.planT.toLocaleString() + ' t plan' + (rec.reached === false ? ' &nbsp;<span style="background:#f59e0b;border-radius:10px;padding:1px 7px;font-size:9px;font-weight:bold;color:#fff">Not reached</span>' : '') + '</span><small>' + rec.time + ' &mdash; ' + (rec.by||"Unknown") + '</small>';
+    var body = document.createElement("div"); body.className = "past-opt-body";
+    rec.results.forEach(function(s,i) {
+      var block = document.createElement("div");
+      block.style.cssText = "background:" + hc[i] + "15;border-left:3px solid " + hc[i] + ";padding:8px 10px;border-radius:6px;margin-bottom:8px;";
+      block.innerHTML = '<div style="font-size:11px;font-weight:bold;color:' + hc[i] + '">' + rl[i] + ' &mdash; ' + s.oz + ' oz | ' + s.tot + ' trucks | ' + s.totT.toLocaleString() + ' t</div>';
+      s.rows.forEach(function(r) {
+        var rw = document.createElement("div");
+        rw.style.cssText = "font-size:11px;color:#333;padding:2px 0;border-bottom:1px solid #eee;display:flex;justify-content:space-between";
+        rw.innerHTML = '<span>' + r.n + '</span><span>' + r.trucks + ' trucks &bull; ' + r.tonnes + ' t &bull; ' + r.oz + ' oz</span>';
+        block.appendChild(rw);
+      });
+      body.appendChild(block);
+    });
+    var btns = document.createElement("div"); btns.style.display="flex";btns.style.gap="6px";btns.style.marginTop="8px";
+    var pdfBtn = document.createElement("button"); pdfBtn.className = "past-opt-pdf"; pdfBtn.textContent = "Print / PDF";
+    pdfBtn.onclick = (function(r){ return function(){ printOptimization(r); }; })(rec);
+    var delBtn = document.createElement("button"); delBtn.className = "past-opt-del"; delBtn.textContent = "Delete";
+    delBtn.onclick = (function(id){ return function(){ deletePast(id); }; })(rec.id);
+    btns.appendChild(pdfBtn); btns.appendChild(delBtn);
+    body.appendChild(btns);
+    card.appendChild(hdr); card.appendChild(body);
+    list.appendChild(card);
+  });
+}
+
+function deletePast(id) {
+  var all = getPastOpts().filter(function(r){return r.id!==id;});
+  localStorage.setItem("oz_past_opts", JSON.stringify(all));
+  renderPast();
+}
+
+function clearAllPast() {
+  if (!confirm("Delete all saved optimizations?")) return;
+  localStorage.removeItem("oz_past_opts");
+  renderPast();
+}
+
+function printOptimization(rec) {
+  var rl = ["Best Match","Runner Up","Third Best"];
+  var hc = ["#b45309","#0f6e56","#4c1d95"];
+  var html2 = '<html><head><title>Ounces Optimization - UMA Obuasi</title><style>body{font-family:Arial,sans-serif;padding:24px;color:#111;max-width:700px;margin:0 auto}h1{font-size:18px;color:#1e3a8a;margin-bottom:4px}.meta{font-size:12px;color:#555;margin-bottom:20px}.opt-block{border-left:4px solid;padding:12px 16px;border-radius:6px;margin-bottom:16px}.opt-title{font-size:13px;font-weight:bold;margin-bottom:8px}table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}th{background:#f1f5f9;padding:6px 10px;text-align:left;border-bottom:1px solid #e2e8f0}td{padding:6px 10px;border-bottom:1px solid #f1f5f9}@media print{button{display:none}}</style></head><body>';
+  html2 += '<h1>Ounces Optimization &mdash; UMA Obuasi Mine</h1>';
+  html2 += '<div class="meta">Target: <strong>' + rec.ozTarget + ' oz</strong> &nbsp;|&nbsp; Plan: <strong>' + rec.planT.toLocaleString() + ' t</strong> &nbsp;|&nbsp; Saved by: <strong>' + (rec.by||"Unknown") + '</strong> &nbsp;|&nbsp; ' + rec.time + '</div>';
+  rec.results.forEach(function(s,i) {
+    html2 += '<div class="opt-block" style="border-color:' + hc[i] + ';background:' + hc[i] + '10"><div class="opt-title" style="color:' + hc[i] + '">' + rl[i] + ' &mdash; ' + s.oz + ' oz &nbsp;|&nbsp; ' + s.tot + ' trucks &nbsp;|&nbsp; ' + s.totT.toLocaleString() + ' t</div><table><thead><tr><th>Stope/Heading</th><th>Type</th><th>Grade</th><th>Trucks</th><th>Tonnes</th><th>Oz</th></tr></thead><tbody>';
+    s.rows.forEach(function(r) { html2 += '<tr><td>' + r.n + '</td><td>' + (r.type||"ore").toUpperCase() + '</td><td>' + r.g + ' g/t</td><td>' + r.trucks + '</td><td>' + r.tonnes.toLocaleString() + '</td><td>' + r.oz + '</td></tr>'; });
+    html2 += '</tbody></table></div>';
+  });
+  html2 += '</body></html>';
+  var w = window.open("","_blank");
+  w.document.write(html2); w.document.close(); w.focus();
+  setTimeout(function(){w.print();}, 400);
+}
+
+// ─── Numpad ───────────────────────────────────────────────────────
+var _npExpr = "";
+var _npCallback = null;
+var _npDecimal = false;
+
+function openNumpad(title, sub, currentVal, callback, allowDecimal) {
+  _npExpr = (currentVal !== undefined && currentVal !== null && currentVal !== "") ? String(currentVal) : "";
+  _npCallback = callback;
+  _npDecimal = !!allowDecimal;
+  document.getElementById("numpadTitle").textContent = title;
+  document.getElementById("numpadSub").textContent = sub || "";
+  document.getElementById("numpadDisplay").textContent = _npExpr || "0";
+  document.getElementById("numpadOvl").className = "numpad-overlay open";
+}
+
+function npKey(k) {
+  if (k === "." && _npExpr.split(/[+\-]/).pop().indexOf(".") >= 0) return;
+  _npExpr += k;
+  document.getElementById("numpadDisplay").textContent = _npExpr;
+}
+
+function npDel() {
+  _npExpr = _npExpr.slice(0, -1);
+  document.getElementById("numpadDisplay").textContent = _npExpr || "0";
+}
+
+function npEval() {
+  try {
+    var result = Function('"use strict"; return (' + _npExpr + ')')();
+    result = Math.round(result * 100) / 100;
+    _npExpr = String(result);
+    document.getElementById("numpadDisplay").textContent = _npExpr;
+  } catch(e) {}
+}
+
+function npConfirm() {
+  npEval();
+  var val = parseFloat(_npExpr);
+  if (isNaN(val)) { alert("Invalid number."); return; }
+  if (_npCallback) { _npCallback(val); }
+  npClose();
+}
+
+function npClose() {
+  document.getElementById("numpadOvl").className = "numpad-overlay";
+  _npCallback = null; _npExpr = "";
+}
+
+// ─── Keyboard input for numpad ────────────────────────────────────
+document.addEventListener("keydown", function(e) {
+  var ovl = document.getElementById("numpadOvl");
+  if (!ovl.classList.contains("open")) return;
+  e.preventDefault();
+  var k = e.key;
+  if (k >= "0" && k <= "9") { npKey(k); }
+  else if (k === "." || k === ",") { npKey("."); }
+  else if (k === "+" ) { npKey("+"); }
+  else if (k === "-" ) { npKey("-"); }
+  else if (k === "=" || k === "Enter") { npConfirm(); }
+  else if (k === "Backspace" || k === "Delete") { npDel(); }
+  else if (k === "Escape") { npClose(); }
+});
+
+// ─── cin / editable focus → numpad ───────────────────────────────
+document.addEventListener("focus", function(e) {
+  var el = e.target;
+  if (!el.classList || !el.classList.contains("cin")) return;
+  if (el.type === "hidden" || el.disabled || el.tagName === "SELECT") return;
+  e.preventDefault();
+  var lbl = el.getAttribute("data-idx") !== null ? "Truck cap" : "Value";
+  var curVal = parseFloat(el.value) || 0;
+  var maxVal = parseFloat(el.getAttribute("max")) || 999;
+  openNumpad(lbl, "Max: " + maxVal, curVal, function(v) {
+    el.value = Math.min(maxVal, Math.max(0, Math.round(v)));
+    el.dispatchEvent(new Event("change", {bubbles: true}));
+  }, false);
+}, true);
+
+document.addEventListener("focus", function(e) {
+  var el = e.target;
+  if (!el.classList || !el.classList.contains("editable")) return;
+  if (el.tagName === "SELECT") return;
+  e.preventDefault();
+  var isDecimal = (el.getAttribute("step") === "0.01");
+  var lbl = el.getAttribute("data-edit-s") !== null ? "Stock (t)" :
+            el.getAttribute("data-edit-g") !== null ? "Grade (g/t)" :
+            el.getAttribute("data-edit-rate") !== null ? "Rate cap (t/day)" :
+            el.getAttribute("data-dedit-c") !== null ? "Cuts" :
+            el.getAttribute("data-dedit-s") !== null ? "Stock (t)" :
+            el.getAttribute("data-dedit-g") !== null ? "Grade (g/t)" : "Value";
+  var curVal = parseFloat(el.value) || 0;
+  openNumpad(lbl, "", curVal, function(v) {
+    el.value = v;
+    el.dispatchEvent(new Event("input", {bubbles: true}));
+  }, isDecimal);
+}, true);
+
+function openNumpadForBase() {
+  var cur = parseFloat(document.getElementById("calcBaseInput").value) || 0;
+  openNumpad("Base stock", "Set starting broken stock (tonnes)", cur, function(val) {
+    document.getElementById("calcBaseInput").value = val;
+    document.getElementById("calcBaseBtn").textContent = Math.round(val).toLocaleString() + " t";
+    updateRunningTotal();
+  });
+}
+
+function openNumpadForCalcT() {
+  openNumpad("Tonnes added", "Enter tonnes from blast or correction", "", function(val) {
+    document.getElementById("calcAddT").value = val;
+    document.getElementById("calcAddTBtn").textContent = Math.round(val).toLocaleString() + " t";
+  });
+}
+
+// ─── Clear all ────────────────────────────────────────────────────
+function clearAll() {
+  if (!confirm("Clear all inputs and results for a fresh optimization?\n\nThis will reset targets, all stopes, and development headings locally. It will NOT affect the published Firebase data until you Publish again.")) return;
+  ST = []; DV = [];
+  tog = {}; devtog = {}; caps = {}; devcaps = {};
+  sols = []; act = []; lastBestResult = null;
+
+  // Reset targets
+  document.getElementById("ozT").value = "";
+  document.getElementById("ozT_btn").textContent = "--";
+  document.getElementById("dp").value = "";
+  document.getElementById("dp_btn").textContent = "--";
+  document.getElementById("trkCnt").textContent = "--";
+  document.getElementById("ozF").value = "0.03215";
+  document.getElementById("ozF_btn").textContent = "0.03215";
+  document.getElementById("tol").value = 2;
+  document.getElementById("tolOut").textContent = "+/-2%";
+  document.getElementById("extraTrucks").value = 0;
+  document.getElementById("extraTrucksOut").textContent = "0 tr";
+
+  // Reset results area
+  document.getElementById("results").innerHTML = '<div class="stmsg">Set your targets above and tap Find Best 3</div>';
+  document.getElementById("expBtn").disabled = true;
+  document.getElementById("saveOptBtn").disabled = true;
+
+  // Close any open forms
+  addOpen = false; devOpen = false;
+  document.getElementById("addForm").className = "addform";
+  document.getElementById("devForm").className = "devform";
+
+  markUnsaved();
+  drawStopes();
+  drawDev();
+  checkSetupBanner();
+  dismissToast();
+}
+
+// ─── AI Developer tab ──────────────────────────────────────────────
+var DEV_API_KEY = "";
+var devHistory = [];       // {role:"user"|"assistant", content:string} — text-only, no full source echoed back
+var stagedSource = null;   // full updated HTML staged for publish, once accepted from preview
+
+function loadDevApiKey() {
+  DEV_API_KEY = localStorage.getItem("oz_dev_api_key") || "";
+  document.getElementById("devApiKeyInput").value = DEV_API_KEY;
+}
+
+function saveDevApiKey() {
+  var v = document.getElementById("devApiKeyInput").value.trim();
+  DEV_API_KEY = v;
+  localStorage.setItem("oz_dev_api_key", v);
+  devLog("system", v ? "API key saved locally." : "API key cleared.");
+}
+
+function devLog(role, text) {
+  var log = document.getElementById("devChatLog");
+  var bubble = document.createElement("div");
+  if (role === "user") {
+    bubble.style.cssText = "align-self:flex-end;max-width:85%;background:#0f6e56;color:#fff;border-radius:12px 12px 2px 12px;padding:8px 11px;font-size:12px;white-space:pre-wrap";
+  } else if (role === "system") {
+    bubble.style.cssText = "align-self:center;max-width:95%;background:#f1f5f9;color:#64748b;border-radius:8px;padding:6px 10px;font-size:10px;text-align:center";
+  } else {
+    bubble.style.cssText = "align-self:flex-start;max-width:85%;background:#fff7ed;color:#111;border:1px solid #fed7aa;border-radius:12px 12px 12px 2px;padding:8px 11px;font-size:12px;white-space:pre-wrap";
+  }
+  bubble.textContent = text;
+  log.appendChild(bubble);
+  log.scrollTop = log.scrollHeight;
+}
+
+function getCurrentSource() {
+  // Prefer the last staged version so edits build on each other; otherwise fetch a fresh
+  // copy of the live file from the server (avoids capturing runtime-mutated DOM state).
+  if (stagedSource) return Promise.resolve(stagedSource);
+  return fetch(location.href).then(function(r) {
+    if (!r.ok) throw new Error("Could not fetch current file");
+    return r.text();
+  }).catch(function() {
+    // Fallback for local file:// testing where fetch-of-self may fail
+    return "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+  });
+}
+
+function sendDevMessage() {
+  var input = document.getElementById("devInput");
+  var msg = input.value.trim();
+  if (!msg) return;
+  if (!DEV_API_KEY) { alert("Enter and save your Claude API key first."); return; }
+
+  devLog("user", msg);
+  input.value = "";
+  var sendBtn = document.getElementById("devSendBtn");
+  sendBtn.disabled = true; sendBtn.textContent = "Thinking...";
+  devLog("system", "Claude is reading the current app source and drafting the change...");
+
+  getCurrentSource().then(function(sourceHTML) {
+    var systemPrompt = "You are a coding assistant embedded inside a single-file HTML/CSS/JS mining production planning app (the Ounces Optimizer, used at UMA Obuasi Mine). " +
+      "The user will describe a change in plain language. You will be given the CURRENT full source of the app. " +
+      "Make the requested change and return the COMPLETE, valid, updated single HTML file — fully working, not a snippet or diff. " +
+      "Preserve all unrelated existing functionality exactly as-is. Keep the existing coding style and structure. " +
+      "Respond in EXACTLY this format, with no other text: \n" +
+      "===SUMMARY===\n" +
+      "(2-3 sentence plain-English description of what you changed)\n" +
+      "===HTML===\n" +
+      "(the complete updated HTML file, starting with <!DOCTYPE html> and ending with </html>)";
+
+    var userTurn = "REQUESTED CHANGE:\n" + msg + "\n\nCURRENT APP SOURCE:\n" + sourceHTML;
+
+    var messages = devHistory.slice().concat([{ role: "user", content: userTurn }]);
+
+    return fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-api-key": DEV_API_KEY,
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true"
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-5",
+        max_tokens: 16000,
+        system: systemPrompt,
+        messages: messages
+      })
+    });
+  }).then(function(res) {
+    return res.json().then(function(data) { return { ok: res.ok, data: data }; });
+  }).then(function(result) {
+    sendBtn.disabled = false; sendBtn.textContent = "Send to Claude";
+    if (!result.ok) {
+      var errMsg = (result.data && result.data.error && result.data.error.message) || "Request failed";
+      devLog("system", "Error: " + errMsg);
+      return;
+    }
+    var textBlock = (result.data.content || []).filter(function(b){ return b.type === "text"; }).map(function(b){ return b.text; }).join("\n");
+    var sIdx = textBlock.indexOf("===SUMMARY===");
+    var hIdx = textBlock.indexOf("===HTML===");
+    if (sIdx < 0 || hIdx < 0) {
+      devLog("assistant", "Couldn't parse a structured response. Raw reply:\n\n" + textBlock.slice(0, 500));
+      return;
+    }
+    var summary = textBlock.slice(sIdx + "===SUMMARY===".length, hIdx).trim();
+    var newHTML = textBlock.slice(hIdx + "===HTML===".length).trim();
+
+    devHistory.push({ role: "user", content: "REQUESTED CHANGE:\n" + msg + " (source omitted from history)" });
+    devHistory.push({ role: "assistant", content: "===SUMMARY===\n" + summary });
+
+    devLog("assistant", summary);
+    previewCandidate(newHTML);
+  }).catch(function(err) {
+    sendBtn.disabled = false; sendBtn.textContent = "Send to Claude";
+    devLog("system", "Error: " + err.message);
+  });
+}
+
+var _pendingCandidateHTML = null;
+function previewCandidate(html) {
+  _pendingCandidateHTML = html;
+  var blob = new Blob([html], { type: "text/html" });
+  var url = URL.createObjectURL(blob);
+  document.getElementById("devPreviewFrame").src = url;
+  document.getElementById("devPreviewBox").style.display = "block";
+}
+
+function acceptStagedChange() {
+  if (!_pendingCandidateHTML) return;
+  stagedSource = _pendingCandidateHTML;
+  document.getElementById("devPreviewBox").style.display = "none";
+  var pubBtn = document.getElementById("devPublishBtn");
+  pubBtn.disabled = false;
+  pubBtn.style.background = "#0f6e56";
+  devLog("system", "Change staged. You can keep chatting to layer more changes, or tap Publish to download the updated file.");
+}
+
+function discardStagedChange() {
+  _pendingCandidateHTML = null;
+  document.getElementById("devPreviewBox").style.display = "none";
+  devLog("system", "Change discarded.");
+}
+
+function publishDevChange() {
+  if (!stagedSource) return;
+  var blob = new Blob([stagedSource], { type: "text/html" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "ounces_optimizer_app_developer_build_" + new Date().toISOString().slice(0,10) + ".html";
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+  devLog("system", "Downloaded. Push this file to your GitHub repo to make it live for everyone.");
+}
+
+
+var _toastTimer = null;
+function showSaveToast(msg) {
+  if (_toastTimer) { clearTimeout(_toastTimer); }
+  var toast = document.getElementById("saveToast");
+  if (msg) { document.getElementById("saveToastMsg").textContent = msg; }
+  toast.classList.add("show");
+  _toastTimer = setTimeout(dismissToast, 8000);
+}
+function dismissToast() {
+  document.getElementById("saveToast").classList.remove("show");
+  if (_toastTimer) { clearTimeout(_toastTimer); _toastTimer = null; }
+}
+
+// ─── Init ─────────────────────────────────────────────────────────
+drawStopes();
+drawDev();
+checkSetupBanner();
+setSyncStatus("sync-saving", "Loading...");
+</script>
+</body>
+</html>
